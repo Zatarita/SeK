@@ -1,0 +1,63 @@
+\hypertarget{sys__io_8h}{}\doxysection{include/\+Endian\+Stream/sys\+\_\+io.h File Reference}
+\label{sys__io_8h}\index{include/EndianStream/sys\_io.h@{include/EndianStream/sys\_io.h}}
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$cstddef$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for sys\+\_\+io.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=262pt]{sys__io_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{sys__io_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespace_sys_i_o}{Sys\+IO}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{Byte\+Array}} = std\+::vector$<$ byte $>$
+\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Sys\+IO\+::\+Byte\+Order}} \+: unsigned char \{ \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332}{Sys\+IO\+::\+Little}}
+, \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5cad491538da818a2ba11a3195ba035cfd3}{Sys\+IO\+::\+Big}}
+ \}
+\begin{DoxyCompactList}\small\item\em Valid System Endianness Options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Byte\+Order \mbox{\hyperlink{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}{Sys\+IO\+::get\+System\+Endianness}} ()
+\begin{DoxyCompactList}\small\item\em Determines system endianness. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class type $>$ }\\void \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{Sys\+IO\+::\+Endian\+Swap}} (type \&data)
+\begin{DoxyCompactList}\small\item\em Swaps the endianness for the passed parameter. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class type $>$ }\\type \mbox{\hyperlink{namespace_sys_i_o_a2136b16453139c9853c2c9338b2aebf3}{Sys\+IO\+::\+Endian\+Cast}} (type data)
+\begin{DoxyCompactList}\small\item\em Swaps the endianness. Creates a copy of the original value. Like Endian\+Swap, but non-\/destructive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const Byte\+Order \mbox{\hyperlink{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}{Sys\+IO\+::system\+Endianness}} \{ get\+System\+Endianness() \}
+\begin{DoxyCompactList}\small\item\em Stores the system endianness to be checked against at runtime. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{sys__io_8h_a616398ae0029922fd47e9c205ca35069}\label{sys__io_8h_a616398ae0029922fd47e9c205ca35069}} 
+\index{sys\_io.h@{sys\_io.h}!ByteArray@{ByteArray}}
+\index{ByteArray@{ByteArray}!sys\_io.h@{sys\_io.h}}
+\doxysubsubsection{\texorpdfstring{ByteArray}{ByteArray}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{Byte\+Array}} =  std\+::vector$<$byte$>$}
+
+
+
+Definition at line 14 of file sys\+\_\+io.\+h.
+

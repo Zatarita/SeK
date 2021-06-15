@@ -1,0 +1,202 @@
+\hypertarget{namespace_sys_i_o}{}\doxysection{Sys\+IO Namespace Reference}
+\label{namespace_sys_i_o}\index{SysIO@{SysIO}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader}{Endian\+Reader}}
+\begin{DoxyCompactList}\small\item\em A stream object that is aware of the endianness of the system, and the endianness of the file being read. the stream can translate the data to the systems native endianness as it reads in the data. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer}{Endian\+Writer}}
+\begin{DoxyCompactList}\small\item\em A stream object that is aware of the endianness of the system, and the endianness of the file being written. the stream can translate the data to any desired endianness as it writes the data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} \+: unsigned char \{ \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332}{Little}}
+, \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5cad491538da818a2ba11a3195ba035cfd3}{Big}}
+ \}
+\begin{DoxyCompactList}\small\item\em Valid System Endianness Options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} \mbox{\hyperlink{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}{get\+System\+Endianness}} ()
+\begin{DoxyCompactList}\small\item\em Determines system endianness. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class type $>$ }\\void \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{Endian\+Swap}} (type \&data)
+\begin{DoxyCompactList}\small\item\em Swaps the endianness for the passed parameter. \end{DoxyCompactList}\item 
+{\footnotesize template$<$class type $>$ }\\type \mbox{\hyperlink{namespace_sys_i_o_a2136b16453139c9853c2c9338b2aebf3}{Endian\+Cast}} (type data)
+\begin{DoxyCompactList}\small\item\em Swaps the endianness. Creates a copy of the original value. Like Endian\+Swap, but non-\/destructive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} \mbox{\hyperlink{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}{system\+Endianness}} \{ \mbox{\hyperlink{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}{get\+System\+Endianness}}() \}
+\begin{DoxyCompactList}\small\item\em Stores the system endianness to be checked against at runtime. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}\label{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}} 
+\index{SysIO@{SysIO}!ByteOrder@{ByteOrder}}
+\index{ByteOrder@{ByteOrder}!SysIO@{SysIO}}
+\doxysubsubsection{\texorpdfstring{ByteOrder}{ByteOrder}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Sys\+IO\+::\+Byte\+Order}} \+: unsigned char\hspace{0.3cm}{\ttfamily [strong]}}
+
+
+
+Valid System Endianness Options. 
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Little@{Little}!SysIO@{SysIO}}\index{SysIO@{SysIO}!Little@{Little}}}\mbox{\Hypertarget{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332}\label{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332}} 
+Little&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Big@{Big}!SysIO@{SysIO}}\index{SysIO@{SysIO}!Big@{Big}}}\mbox{\Hypertarget{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5cad491538da818a2ba11a3195ba035cfd3}\label{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5cad491538da818a2ba11a3195ba035cfd3}} 
+Big&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line 19 of file sys\+\_\+io.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{20     \{}
+\DoxyCodeLine{21         \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332}{Little}},}
+\DoxyCodeLine{22         \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5cad491538da818a2ba11a3195ba035cfd3}{Big}}}
+\DoxyCodeLine{23     \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespace_sys_i_o_a2136b16453139c9853c2c9338b2aebf3}\label{namespace_sys_i_o_a2136b16453139c9853c2c9338b2aebf3}} 
+\index{SysIO@{SysIO}!EndianCast@{EndianCast}}
+\index{EndianCast@{EndianCast}!SysIO@{SysIO}}
+\doxysubsubsection{\texorpdfstring{EndianCast()}{EndianCast()}}
+{\footnotesize\ttfamily template$<$class type $>$ \\
+type Sys\+IO\+::\+Endian\+Cast (\begin{DoxyParamCaption}\item[{type}]{data }\end{DoxyParamCaption})}
+
+
+
+Swaps the endianness. Creates a copy of the original value. Like Endian\+Swap, but non-\/destructive. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Type} & -\/ Type of the object. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em Type} & data -\/ Reference to the memory location to swap. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+type -\/ Swapped data 
+\end{DoxyReturn}
+
+
+Definition at line 47 of file sys\+\_\+io.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{48     \{}
+\DoxyCodeLine{49         \textcolor{keywordtype}{byte}* rawData = \textcolor{keyword}{new}(\&data) \textcolor{keywordtype}{byte}[\textcolor{keyword}{sizeof}(type)];}
+\DoxyCodeLine{50         std::reverse(rawData, rawData + \textcolor{keyword}{sizeof}(type));}
+\DoxyCodeLine{51         \textcolor{keywordflow}{return} data;}
+\DoxyCodeLine{52     \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}\label{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}} 
+\index{SysIO@{SysIO}!EndianSwap@{EndianSwap}}
+\index{EndianSwap@{EndianSwap}!SysIO@{SysIO}}
+\doxysubsubsection{\texorpdfstring{EndianSwap()}{EndianSwap()}}
+{\footnotesize\ttfamily template$<$class type $>$ \\
+void Sys\+IO\+::\+Endian\+Swap (\begin{DoxyParamCaption}\item[{type \&}]{data }\end{DoxyParamCaption})}
+
+
+
+Swaps the endianness for the passed parameter. 
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em Type} & -\/ Type of the object. \\
+\hline
+\end{DoxyTemplParams}
+
+\begin{DoxyParams}{Parameters}
+{\em Type} & data -\/ Reference to the memory location to swap. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 36 of file sys\+\_\+io.\+h.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{37     \{}
+\DoxyCodeLine{38         \textcolor{keywordtype}{byte}* rawData = \textcolor{keyword}{new}(\&data) \textcolor{keywordtype}{byte}[\textcolor{keyword}{sizeof}(type)];}
+\DoxyCodeLine{39         std::reverse(rawData, rawData + \textcolor{keyword}{sizeof}(type));}
+\DoxyCodeLine{40     \}}
+
+\end{DoxyCode}
+
+
+Referenced by Sys\+IO\+::\+Endian\+Reader\+::operator$>$$>$(), and Sys\+IO\+::\+Endian\+Writer\+::write().
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}\label{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}} 
+\index{SysIO@{SysIO}!getSystemEndianness@{getSystemEndianness}}
+\index{getSystemEndianness@{getSystemEndianness}!SysIO@{SysIO}}
+\doxysubsubsection{\texorpdfstring{getSystemEndianness()}{getSystemEndianness()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} Sys\+IO\+::get\+System\+Endianness (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Determines system endianness. 
+
+\begin{DoxyReturn}{Returns}
+Byte\+Order -\/ System endianness 
+\end{DoxyReturn}
+
+
+Definition at line 10 of file sys\+\_\+io.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{11     \{}
+\DoxyCodeLine{12         \textcolor{comment}{// Create a temp short equal to one. Then create a char array in the same memory address}}
+\DoxyCodeLine{13         \textcolor{keywordtype}{short} one = 0x0001;}
+\DoxyCodeLine{14         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}* rawData = \textcolor{keyword}{new}(\&one) \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char}[2];}
+\DoxyCodeLine{15         \textcolor{comment}{// If the first byte of the short in raw memory is 1 our system is little endian; else, big}}
+\DoxyCodeLine{16         \textcolor{keywordflow}{return} rawData[0] ? ByteOrder::Little : ByteOrder::Big;}
+\DoxyCodeLine{17     \}}
+
+\end{DoxyCode}
+
+
+References Big, and Little.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}\label{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}} 
+\index{SysIO@{SysIO}!systemEndianness@{systemEndianness}}
+\index{systemEndianness@{systemEndianness}!SysIO@{SysIO}}
+\doxysubsubsection{\texorpdfstring{systemEndianness}{systemEndianness}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} Sys\+IO\+::system\+Endianness \{ \mbox{\hyperlink{namespace_sys_i_o_ae86f7cb9ab81ae2b6f3028009c252bde}{get\+System\+Endianness}}() \}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Stores the system endianness to be checked against at runtime. 
+
+
+
+Definition at line 30 of file sys\+\_\+io.\+h.
+
+
+
+Referenced by Sys\+IO\+::\+Endian\+Reader\+::operator$>$$>$(), and Sys\+IO\+::\+Endian\+Writer\+::write().
+

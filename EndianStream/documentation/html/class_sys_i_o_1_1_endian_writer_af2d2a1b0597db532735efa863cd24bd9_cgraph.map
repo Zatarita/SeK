@@ -1,0 +1,4 @@
+<map id="SysIO::EndianWriter::write" name="SysIO::EndianWriter::write">
+<area shape="rect" id="node1" title="Write some data to file. Adjusted for endianness if required." alt="" coords="5,5,147,47"/>
+<area shape="rect" id="node2" href="$namespace_sys_i_o.html#aaae01cabe0b56e28420b0974f95e7cb8" title="Swaps the endianness for the passed parameter." alt="" coords="195,13,333,39"/>
+</map>

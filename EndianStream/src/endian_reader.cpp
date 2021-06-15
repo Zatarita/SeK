@@ -36,10 +36,10 @@ namespace SysIO
         return;
     }
 
-    void EndianReader::pad(const size_t& size)
+    void EndianReader::pad(const size_t& n)
     {
         // Skip over padding by seeking to the current position + padding size
-        seek( tell() + size );
+        seek( tell() + n );
         return;
     }
 
@@ -77,33 +77,33 @@ namespace SysIO
         return ret;
     }
 
-    ByteArray EndianReader::readRaw(const size_t& offset, const size_t& size)
+    ByteArray EndianReader::readRaw(const size_t& offset, const size_t& n)
     {
         // Store the original position, and create a vector<byte> of the right size
         const size_t initPos { tell() };
-        ByteArray ret(size);
+        ByteArray ret(n);
 
         // If the end of the block exceeds the file size, we'll end up with an overflow.
-        if(offset + size > fileSize)
+        if(offset + n > fileSize)
             throw std::runtime_error(EXCEPTION_FILE_BOUNDS);
 
         // Seek to the beginning of the data, Read the data, then return to initPos
         seek(offset);
-        file.read(reinterpret_cast<char*>(ret.data()), size);
+        file.read(reinterpret_cast<char*>(ret.data()), n);
         seek(initPos);
 
         return ret;
     }
 
-    ByteArray EndianReader::readRaw(const size_t& size)
+    ByteArray EndianReader::readRaw(const size_t& n)
     {
         // If the end of the block exceeds the file size, we'll end up with an overflow.
-        if(tell() + size > fileSize)
+        if(tell() + n > fileSize)
             throw std::runtime_error(EXCEPTION_FILE_BOUNDS);
 
         // Create a ByteArray of 'size' width. Read from the file into byte array
-        ByteArray ret(size);
-        file.read(reinterpret_cast<char*>(ret.data()), size);
+        ByteArray ret(n);
+        file.read(reinterpret_cast<char*>(ret.data()), n);
 
         return ret;
     }

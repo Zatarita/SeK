@@ -1,0 +1,5 @@
+<map id="SysIO::EndianWriter::tell" name="SysIO::EndianWriter::tell">
+<area shape="rect" id="node1" title="Gets the current position in the stream." alt="" coords="224,27,365,69"/>
+<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_writer.html#afa53855d6d3750c8e50168b5d512c880" title="Treats n bytes as padding, skipping over them." alt="" coords="5,5,176,32"/>
+<area shape="rect" id="node3" href="$class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a" title="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..." alt="" coords="20,57,161,98"/>
+</map>

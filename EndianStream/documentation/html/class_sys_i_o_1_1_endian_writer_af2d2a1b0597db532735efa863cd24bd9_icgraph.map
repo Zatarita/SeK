@@ -1,0 +1,5 @@
+<map id="SysIO::EndianWriter::write" name="SysIO::EndianWriter::write">
+<area shape="rect" id="node1" title="Write some data to file. Adjusted for endianness if required." alt="" coords="195,39,336,80"/>
+<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_writer.html#a39ebe9e5866689843c6c6318bd6c7fa1" title="Write wrapper for &lt;&lt; override." alt="" coords="5,5,147,47"/>
+<area shape="rect" id="node3" href="$class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a" title="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..." alt="" coords="5,71,147,112"/>
+</map>

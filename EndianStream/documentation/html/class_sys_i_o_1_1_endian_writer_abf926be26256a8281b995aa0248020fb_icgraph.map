@@ -1,0 +1,4 @@
+<map id="SysIO::EndianWriter::seek" name="SysIO::EndianWriter::seek">
+<area shape="rect" id="node1" title="Goto a specific offset." alt="" coords="195,5,336,47"/>
+<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a" title="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..." alt="" coords="5,5,147,47"/>
+</map>

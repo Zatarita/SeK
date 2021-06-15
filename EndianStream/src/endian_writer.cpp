@@ -24,9 +24,9 @@ namespace SysIO
         file.seekp(offset);
     }
 
-    void EndianWriter::pad(const size_t& size)
+    void EndianWriter::pad(const size_t& n)
     {
-        file.seekp(tell() + size);
+        file.seekp(tell() + n);
     }
 
     size_t EndianWriter::tell()

@@ -1,0 +1,7 @@
+<map id="SysIO::EndianSwap" name="SysIO::EndianSwap">
+<area shape="rect" id="node1" title="Swaps the endianness for the passed parameter." alt="" coords="389,46,528,73"/>
+<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_reader.html#a0be3c5a16959de2a32abffe48d7ec8ac" title="Read some data from the stream into an existing object." alt="" coords="195,5,341,47"/>
+<area shape="rect" id="node3" href="$class_sys_i_o_1_1_endian_writer.html#af2d2a1b0597db532735efa863cd24bd9" title="Write some data to file. Adjusted for endianness if required." alt="" coords="197,71,339,112"/>
+<area shape="rect" id="node4" href="$class_sys_i_o_1_1_endian_writer.html#a39ebe9e5866689843c6c6318bd6c7fa1" title="Write wrapper for &lt;&lt; override." alt="" coords="5,37,147,79"/>
+<area shape="rect" id="node5" href="$class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a" title="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..." alt="" coords="5,103,147,144"/>
+</map>

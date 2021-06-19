@@ -1,4 +1,0 @@
-<map id="SysIO::EndianReader::readRaw" name="SysIO::EndianReader::readRaw">
-<area shape="rect" id="node1" title="Read n bytes from current position." alt="" coords="5,5,152,47"/>
-<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_reader.html#a66d087f8d98f74393be3d2c993045c5a" title="Gets the current position in the stream." alt="" coords="200,5,347,47"/>
-</map>

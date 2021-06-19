@@ -1,0 +1,10 @@
+digraph "SysIO::EndianWriter::close"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="SysIO::EndianWriter\l::close",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="close the stream"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="SysIO::EndianWriter\l::~EndianWriter",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sys_i_o_1_1_endian_writer.html#a0247099002d0f537ff0c8fa1c6e2b6c7",tooltip="Cleanup ofstream."];
+}

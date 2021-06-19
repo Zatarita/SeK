@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['maximum_5fstring_5flength_19',['MAXIMUM_STRING_LENGTH',['../class_sys_i_o_1_1_endian_reader.html#a6cc313e98a341862be019c4707822672',1,'SysIO::EndianReader']]]
+  ['little_21',['Little',['../namespace_sys_i_o.html#a5c9f319a103b855b568a785fabd87e5ca0f9197b3e286a7522984831949087332',1,'SysIO']]]
 ];

@@ -1,0 +1,304 @@
+.TH "SysIO::EndianWriter" 3 "Sat Jun 19 2021" "Version 1.0" "Endian Stream" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+SysIO::EndianWriter \- A stream object that is aware of the endianness of the system, and the endianness of the file being written\&. the stream can translate the data to any desired endianness as it writes the data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <endian_writer\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEndianWriter\fP (const std::string &, const \fBByteOrder\fP &)"
+.br
+.RI "prepare a file for writing, and designate the endianness of the stream "
+.ti -1c
+.RI "\fB~EndianWriter\fP ()"
+.br
+.RI "Cleanup ofstream\&. "
+.ti -1c
+.RI "void \fBclose\fP ()"
+.br
+.RI "close the stream "
+.ti -1c
+.RI "void \fBseek\fP (const size_t &)"
+.br
+.RI "Goto a specific offset\&. "
+.ti -1c
+.RI "void \fBpad\fP (const size_t &)"
+.br
+.RI "Treats n bytes as padding, skipping over them\&. "
+.ti -1c
+.RI "size_t \fBtell\fP ()"
+.br
+.RI "Gets the current position in the stream\&. "
+.ti -1c
+.RI "void \fBwriteString\fP (const std::string &, const bool &=false)"
+.br
+.RI "Write a string to the stream\&. Null terminating if desired\&. "
+.ti -1c
+.RI "void \fBwriteRaw\fP (const \fBByteArray\fP &)"
+.br
+.RI "Write raw data to file from ByteArray (ByteArray is a vector<std::byte>) "
+.ti -1c
+.RI "template<class type > void \fBwrite\fP (type data)"
+.br
+.RI "Write some data to file\&. Adjusted for endianness if required\&. "
+.ti -1c
+.RI "template<class type > \fBEndianWriter\fP & \fBoperator<<\fP (const type &data)"
+.br
+.RI "Write wrapper for << override\&. "
+.ti -1c
+.RI "template<class type > void \fBwriteAt\fP (const type &data, const size_t &offset)"
+.br
+.RI "Write some data to file at a specific offset\&. Adjusted for endianness if required (note stream position remains unchanged) "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A stream object that is aware of the endianness of the system, and the endianness of the file being written\&. the stream can translate the data to any desired endianness as it writes the data\&. 
+.PP
+Definition at line 19 of file endian_writer\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "SysIO::EndianWriter::EndianWriter (const std::string & path, const \fBByteOrder\fP & endianness)"
+
+.PP
+prepare a file for writing, and designate the endianness of the stream 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstd::string\fP Path - File the stream is designated to write to 
+.br
+\fIByteOrder\fP Endianness - Endianness of the file in question 
+.RE
+.PP
+
+.PP
+Definition at line 10 of file endian_writer\&.cpp\&.
+.PP
+.nf
+10                                                                                  : fileEndianness(endianness)
+11     {
+12         file\&.open(path, std::ios_base::binary);
+13         if(!file\&.is_open())
+14             throw std::runtime_error(EXCEPTION_FILE_ACCESS);
+15     }
+.fi
+.SS "SysIO::EndianWriter::~EndianWriter ()"
+
+.PP
+Cleanup ofstream\&. 
+.PP
+Definition at line 17 of file endian_writer\&.cpp\&.
+.PP
+.nf
+18     {
+19         close();
+20     }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "void SysIO::EndianWriter::close ()"
+
+.PP
+close the stream 
+.PP
+Definition at line 22 of file endian_writer\&.cpp\&.
+.PP
+.nf
+23     {
+24         file\&.close();
+25     }
+.fi
+.SS "template<class type > \fBEndianWriter\fP& SysIO::EndianWriter::operator<< (const type & data)\fC [inline]\fP"
+
+.PP
+Write wrapper for << override\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP data - Data to write to file 
+.RE
+.PP
+\fBTemplate Parameters\fP
+.RS 4
+\fItype\fP - Template type 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file endian_writer\&.h\&.
+.PP
+.nf
+76         {
+77             // wrapper for write function
+78             write(data);
+79             return *this;
+80         }
+.fi
+.SS "void SysIO::EndianWriter::pad (const size_t & n)"
+
+.PP
+Treats n bytes as padding, skipping over them\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize_t\fP n - Number of bytes as padding 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file endian_writer\&.cpp\&.
+.PP
+.nf
+33     {
+34         file\&.seekp(tell() + n);
+35     }
+.fi
+.SS "void SysIO::EndianWriter::seek (const size_t & offset)"
+
+.PP
+Goto a specific offset\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize_t\fP Offset - Offset to the new stream position 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file endian_writer\&.cpp\&.
+.PP
+.nf
+28     {
+29         file\&.seekp(offset);
+30     }
+.fi
+.SS "size_t SysIO::EndianWriter::tell ()"
+
+.PP
+Gets the current position in the stream\&. 
+.PP
+\fBReturns\fP
+.RS 4
+size_t - Stream position 
+.RE
+.PP
+
+.PP
+Definition at line 37 of file endian_writer\&.cpp\&.
+.PP
+.nf
+38     {
+39         return file\&.tellp();
+40     }
+.fi
+.SS "template<class type > void SysIO::EndianWriter::write (type data)\fC [inline]\fP"
+
+.PP
+Write some data to file\&. Adjusted for endianness if required\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP data - Data to write to file 
+.RE
+.PP
+\fBTemplate Parameters\fP
+.RS 4
+\fItype\fP - Template type 
+.RE
+.PP
+
+.PP
+Definition at line 63 of file endian_writer\&.h\&.
+.PP
+.nf
+64         {
+65             // swap the endianness if needed, then write the data
+66             if (SysIO::systemEndianness != fileEndianness)
+67                 SysIO::EndianSwap(data);
+68             file\&.write(reinterpret_cast<char*>(&data), sizeof(type));
+69         }
+.fi
+.SS "template<class type > void SysIO::EndianWriter::writeAt (const type & data, const size_t & offset)\fC [inline]\fP"
+
+.PP
+Write some data to file at a specific offset\&. Adjusted for endianness if required (note stream position remains unchanged) 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP data - Data to write to file 
+.br
+\fIsize_t\fP offset - Offset to write the data at 
+.RE
+.PP
+\fBTemplate Parameters\fP
+.RS 4
+\fItype\fP - Template type 
+.RE
+.PP
+
+.PP
+Definition at line 87 of file endian_writer\&.h\&.
+.PP
+.nf
+88         {
+89             // Store initial position, then seek to desired offset\&.
+90             const size_t initialPos {tell()};
+91             seek(offset);
+92             // write the data, and return to where we were at the start\&.
+93             write(data);
+94             seek(initialPos);
+95         }
+.fi
+.SS "void SysIO::EndianWriter::writeRaw (const \fBByteArray\fP & raw)"
+
+.PP
+Write raw data to file from ByteArray (ByteArray is a vector<std::byte>) 
+.PP
+\fBParameters\fP
+.RS 4
+\fIByteArray\fP data - Raw data to write to file 
+.RE
+.PP
+
+.PP
+Definition at line 49 of file endian_writer\&.cpp\&.
+.PP
+.nf
+50     {
+51         file\&.write(reinterpret_cast<const char*>(raw\&.data()), raw\&.size());
+52     }
+.fi
+.SS "void SysIO::EndianWriter::writeString (const std::string & str, const bool & nullTerminated = \fCfalse\fP)"
+
+.PP
+Write a string to the stream\&. Null terminating if desired\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIstd::string\fP str - String to write to the stream 
+.br
+\fIbool\fP nullTerminated - adds the null terminator to the end of the write 
+.RE
+.PP
+
+.PP
+Definition at line 42 of file endian_writer\&.cpp\&.
+.PP
+.nf
+43     {
+44         file\&.write(str\&.data(), str\&.size());
+45         if(nullTerminated)
+46             file\&.write(new char{'\0'}, 1);
+47     }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Endian Stream from the source code\&.

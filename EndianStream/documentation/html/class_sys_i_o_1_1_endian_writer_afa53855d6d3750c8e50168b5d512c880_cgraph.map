@@ -1,4 +1,0 @@
-<map id="SysIO::EndianWriter::pad" name="SysIO::EndianWriter::pad">
-<area shape="rect" id="node1" title="Treats n bytes as padding, skipping over them." alt="" coords="5,13,176,39"/>
-<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_writer.html#a9efde7418bf4562b79961d791cfcc0a2" title="Gets the current position in the stream." alt="" coords="224,5,365,47"/>
-</map>

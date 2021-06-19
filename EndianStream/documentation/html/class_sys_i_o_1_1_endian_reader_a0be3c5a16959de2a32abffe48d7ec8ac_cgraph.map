@@ -1,4 +1,0 @@
-<map id="SysIO::EndianReader::operator&gt;&gt;" name="SysIO::EndianReader::operator&gt;&gt;">
-<area shape="rect" id="node1" title="Read some data from the stream into an existing object." alt="" coords="5,5,152,47"/>
-<area shape="rect" id="node2" href="$namespace_sys_i_o.html#aaae01cabe0b56e28420b0974f95e7cb8" title="Swaps the endianness for the passed parameter." alt="" coords="200,13,339,39"/>
-</map>

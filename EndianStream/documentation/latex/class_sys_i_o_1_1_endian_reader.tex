@@ -16,6 +16,8 @@ A stream object that is aware of the endianness of the system, and the endiannes
 \begin{DoxyCompactList}\small\item\em Load a file, and designate the endianness of the stream. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_af00d14d616009ccb30d4c9920c591ed4}{$\sim$\+Endian\+Reader}} ()
 \begin{DoxyCompactList}\small\item\em Cleanup ifstream. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a5b672c0a13b3d117f70607ace3734941}{close}} ()
+\begin{DoxyCompactList}\small\item\em close the stream \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}} (const size\+\_\+t \&)
 \begin{DoxyCompactList}\small\item\em Goto a specific offset. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a5a4a186a7a912d9b6f903e16fcaf3066}{pad}} (const size\+\_\+t \&)
@@ -101,10 +103,6 @@ Definition at line 10 of file endian\+\_\+reader.\+cpp.
 \DoxyCodeLine{21     \}}
 
 \end{DoxyCode}
-
-
-References EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS, file, and file\+Size.
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_af00d14d616009ccb30d4c9920c591ed4}\label{class_sys_i_o_1_1_endian_reader_af00d14d616009ccb30d4c9920c591ed4}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!````~EndianReader@{$\sim$EndianReader}}
 \index{````~EndianReader@{$\sim$EndianReader}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -123,17 +121,38 @@ Definition at line 23 of file endian\+\_\+reader.\+cpp.
 \begin{DoxyCode}{0}
 \DoxyCodeLine{24     \{}
 \DoxyCodeLine{25         \textcolor{comment}{// cleanup}}
-\DoxyCodeLine{26         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.close();}
+\DoxyCodeLine{26         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a5b672c0a13b3d117f70607ace3734941}{close}}();}
 \DoxyCodeLine{27     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
+Here is the call graph for this function\+:
+% FIG 0
 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a5b672c0a13b3d117f70607ace3734941}\label{class_sys_i_o_1_1_endian_reader_a5b672c0a13b3d117f70607ace3734941}} 
+\index{SysIO::EndianReader@{SysIO::EndianReader}!close@{close}}
+\index{close@{close}!SysIO::EndianReader@{SysIO::EndianReader}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void Sys\+IO\+::\+Endian\+Reader\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+close the stream 
+
+
+
+Definition at line 29 of file endian\+\_\+reader.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{30     \{}
+\DoxyCodeLine{31         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.close();}
+\DoxyCodeLine{32     \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 1
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a0be3c5a16959de2a32abffe48d7ec8ac}\label{class_sys_i_o_1_1_endian_reader_a0be3c5a16959de2a32abffe48d7ec8ac}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!operator$>$$>$@{operator$>$$>$}}
 \index{operator$>$$>$@{operator$>$$>$}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -160,30 +179,21 @@ Read some data from the stream into an existing object.
 \end{DoxyReturn}
 
 
-Definition at line 105 of file endian\+\_\+reader.\+h.
+Definition at line 108 of file endian\+\_\+reader.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{106         \{}
-\DoxyCodeLine{107             \textcolor{comment}{// Read data from the stream, swap the endianness if needed.}}
-\DoxyCodeLine{108             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}( \&data ), \textcolor{keyword}{sizeof}(data));}
-\DoxyCodeLine{109             \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}{SysIO::systemEndianness}} != \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ab49d673fb16d325272519cc2ffe250b8}{fileEndianness}})}
-\DoxyCodeLine{110                 \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{SysIO::EndianSwap}}(data);}
-\DoxyCodeLine{111             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{112         \};}
+\DoxyCodeLine{109         \{}
+\DoxyCodeLine{110             \textcolor{comment}{// Read data from the stream, swap the endianness if needed.}}
+\DoxyCodeLine{111             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}( \&data ), \textcolor{keyword}{sizeof}(data));}
+\DoxyCodeLine{112             \textcolor{keywordflow}{if} (SysIO::systemEndianness != \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ab49d673fb16d325272519cc2ffe250b8}{fileEndianness}})}
+\DoxyCodeLine{113                 \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{SysIO::EndianSwap}}(data);}
+\DoxyCodeLine{114             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{115         \};}
 
 \end{DoxyCode}
-
-
-References Sys\+IO\+::\+Endian\+Swap(), file, file\+Endianness, and Sys\+IO\+::system\+Endianness.
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=330pt]{class_sys_i_o_1_1_endian_reader_a0be3c5a16959de2a32abffe48d7ec8ac_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 2
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a5a4a186a7a912d9b6f903e16fcaf3066}\label{class_sys_i_o_1_1_endian_reader_a5a4a186a7a912d9b6f903e16fcaf3066}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!pad@{pad}}
 \index{pad@{pad}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -201,28 +211,19 @@ Treats n bytes as padding, skipping over them.
 \end{DoxyParams}
 
 
-Definition at line 39 of file endian\+\_\+reader.\+cpp.
+Definition at line 44 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{40     \{}
-\DoxyCodeLine{41         \textcolor{comment}{// Skip over padding by seeking to the current position + padding size}}
-\DoxyCodeLine{42         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}( \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() + n );}
-\DoxyCodeLine{43         \textcolor{keywordflow}{return};}
-\DoxyCodeLine{44     \}}
+\DoxyCodeLine{45     \{}
+\DoxyCodeLine{46         \textcolor{comment}{// Skip over padding by seeking to the current position + padding size}}
+\DoxyCodeLine{47         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}( \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() + n );}
+\DoxyCodeLine{48         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{49     \}}
 
 \end{DoxyCode}
-
-
-References seek(), and tell().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_reader_a5a4a186a7a912d9b6f903e16fcaf3066_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 3
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a73e31876c39356d234cb76081e50b73a}\label{class_sys_i_o_1_1_endian_reader_a73e31876c39356d234cb76081e50b73a}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!peek@{peek}}
 \index{peek@{peek}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -244,32 +245,23 @@ type -\/ A new instance of \textquotesingle{}type\textquotesingle{} read from th
 \end{DoxyReturn}
 
 
-Definition at line 89 of file endian\+\_\+reader.\+h.
+Definition at line 92 of file endian\+\_\+reader.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{90         \{}
-\DoxyCodeLine{91             \textcolor{comment}{// Read data of a certain type, seek the stream back, and return the data}}
-\DoxyCodeLine{92             type ret;}
-\DoxyCodeLine{93             *\textcolor{keyword}{this} >> ret;}
-\DoxyCodeLine{94 }
-\DoxyCodeLine{95             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}( \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() -\/ \textcolor{keyword}{sizeof}(type) );}
-\DoxyCodeLine{96 }
-\DoxyCodeLine{97             \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{98         \}}
+\DoxyCodeLine{93         \{}
+\DoxyCodeLine{94             \textcolor{comment}{// Read data of a certain type, seek the stream back, and return the data}}
+\DoxyCodeLine{95             type ret;}
+\DoxyCodeLine{96             *\textcolor{keyword}{this} >> ret;}
+\DoxyCodeLine{97 }
+\DoxyCodeLine{98             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}( \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() -\/ \textcolor{keyword}{sizeof}(type) );}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100             \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{101         \}}
 
 \end{DoxyCode}
-
-
-References seek(), and tell().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=336pt]{class_sys_i_o_1_1_endian_reader_a73e31876c39356d234cb76081e50b73a_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 4
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_addb631e7bdba343f052c29c14b199000}\label{class_sys_i_o_1_1_endian_reader_addb631e7bdba343f052c29c14b199000}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!read@{read}}
 \index{read@{read}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -291,16 +283,16 @@ type -\/ A new instance of \textquotesingle{}type\textquotesingle{} read from th
 \end{DoxyReturn}
 
 
-Definition at line 77 of file endian\+\_\+reader.\+h.
+Definition at line 80 of file endian\+\_\+reader.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{78         \{}
-\DoxyCodeLine{79             \textcolor{comment}{// Read data of a certain type and return it.}}
-\DoxyCodeLine{80             type ret;}
-\DoxyCodeLine{81             *\textcolor{keyword}{this} >> ret;}
-\DoxyCodeLine{82             \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{83         \}}
+\DoxyCodeLine{81         \{}
+\DoxyCodeLine{82             \textcolor{comment}{// Read data of a certain type and return it.}}
+\DoxyCodeLine{83             type ret;}
+\DoxyCodeLine{84             *\textcolor{keyword}{this} >> ret;}
+\DoxyCodeLine{85             \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{86         \}}
 
 \end{DoxyCode}
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_adc7d2d7e109914ea29416fd094b18145}\label{class_sys_i_o_1_1_endian_reader_adc7d2d7e109914ea29416fd094b18145}} 
@@ -323,34 +315,25 @@ Byte\+Array -\/ Range of bytes requested
 \end{DoxyReturn}
 
 
-Definition at line 98 of file endian\+\_\+reader.\+cpp.
+Definition at line 103 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{99     \{}
-\DoxyCodeLine{100         \textcolor{comment}{// If the end of the block exceeds the file size, we'll end up with an overflow.}}
-\DoxyCodeLine{101         \textcolor{keywordflow}{if}(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() + n > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
-\DoxyCodeLine{102             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
-\DoxyCodeLine{103 }
-\DoxyCodeLine{104         \textcolor{comment}{// Create a ByteArray of 'size' width. Read from the file into byte array}}
-\DoxyCodeLine{105         \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{ByteArray}} ret(n);}
-\DoxyCodeLine{106         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(ret.data()), n);}
-\DoxyCodeLine{107 }
-\DoxyCodeLine{108         \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{109     \}}
+\DoxyCodeLine{104     \{}
+\DoxyCodeLine{105         \textcolor{comment}{// If the end of the block exceeds the file size, we'll end up with an overflow.}}
+\DoxyCodeLine{106         \textcolor{keywordflow}{if}(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() + n > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
+\DoxyCodeLine{107             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109         \textcolor{comment}{// Create a ByteArray of 'size' width. Read from the file into byte array}}
+\DoxyCodeLine{110         \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{ByteArray}} ret(n);}
+\DoxyCodeLine{111         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(ret.data()), n);}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{114     \}}
 
 \end{DoxyCode}
-
-
-References EXCEPTION\+\_\+\+FILE\+\_\+\+BOUNDS, file, file\+Size, and tell().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=336pt]{class_sys_i_o_1_1_endian_reader_adc7d2d7e109914ea29416fd094b18145_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 5
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_ab5945dcf80c04489bbf452e985874828}\label{class_sys_i_o_1_1_endian_reader_ab5945dcf80c04489bbf452e985874828}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!readRaw@{readRaw}}
 \index{readRaw@{readRaw}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -373,39 +356,30 @@ Byte\+Array -\/ Range of bytes requested
 \end{DoxyReturn}
 
 
-Definition at line 80 of file endian\+\_\+reader.\+cpp.
+Definition at line 85 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{81     \{}
-\DoxyCodeLine{82         \textcolor{comment}{// Store the original position, and create a vector<byte> of the right size}}
-\DoxyCodeLine{83         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} initPos \{ \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() \};}
-\DoxyCodeLine{84         \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{ByteArray}} ret(n);}
-\DoxyCodeLine{85 }
-\DoxyCodeLine{86         \textcolor{comment}{// If the end of the block exceeds the file size, we'll end up with an overflow.}}
-\DoxyCodeLine{87         \textcolor{keywordflow}{if}(offset + n > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
-\DoxyCodeLine{88             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
-\DoxyCodeLine{89 }
-\DoxyCodeLine{90         \textcolor{comment}{// Seek to the beginning of the data, Read the data, then return to initPos}}
-\DoxyCodeLine{91         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}(offset);}
-\DoxyCodeLine{92         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(ret.data()), n);}
-\DoxyCodeLine{93         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}(initPos);}
+\DoxyCodeLine{86     \{}
+\DoxyCodeLine{87         \textcolor{comment}{// Store the original position, and create a vector<byte> of the right size}}
+\DoxyCodeLine{88         \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} initPos \{ \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}{tell}}() \};}
+\DoxyCodeLine{89         \mbox{\hyperlink{sys__io_8h_a616398ae0029922fd47e9c205ca35069}{ByteArray}} ret(n);}
+\DoxyCodeLine{90 }
+\DoxyCodeLine{91         \textcolor{comment}{// If the end of the block exceeds the file size, we'll end up with an overflow.}}
+\DoxyCodeLine{92         \textcolor{keywordflow}{if}(offset + n > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
+\DoxyCodeLine{93             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
 \DoxyCodeLine{94 }
-\DoxyCodeLine{95         \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{96     \}}
+\DoxyCodeLine{95         \textcolor{comment}{// Seek to the beginning of the data, Read the data, then return to initPos}}
+\DoxyCodeLine{96         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}(offset);}
+\DoxyCodeLine{97         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(ret.data()), n);}
+\DoxyCodeLine{98         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}{seek}}(initPos);}
+\DoxyCodeLine{99 }
+\DoxyCodeLine{100         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{101     \}}
 
 \end{DoxyCode}
-
-
-References EXCEPTION\+\_\+\+FILE\+\_\+\+BOUNDS, file, file\+Size, seek(), and tell().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=336pt]{class_sys_i_o_1_1_endian_reader_ab5945dcf80c04489bbf452e985874828_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 6
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a0155190a4bcfd808171805a3a1133891}\label{class_sys_i_o_1_1_endian_reader_a0155190a4bcfd808171805a3a1133891}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!readString@{readString}}
 \index{readString@{readString}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -421,32 +395,28 @@ std\+::string -\/ String read from stream
 \end{DoxyReturn}
 
 
-Definition at line 62 of file endian\+\_\+reader.\+cpp.
+Definition at line 67 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{63     \{}
-\DoxyCodeLine{64         std::string ret;}
-\DoxyCodeLine{65         \textcolor{keywordtype}{char} buffer;}
-\DoxyCodeLine{66 }
-\DoxyCodeLine{67         \textcolor{comment}{// For loop prevents infinite loop}}
-\DoxyCodeLine{68         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a6cc313e98a341862be019c4707822672}{MAXIMUM\_STRING\_LENGTH}}; ++i)}
-\DoxyCodeLine{69         \{}
-\DoxyCodeLine{70             \textcolor{comment}{// Read a char at a time until we reach a null terminator.}}
-\DoxyCodeLine{71             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\&buffer, 1);}
-\DoxyCodeLine{72             \textcolor{keywordflow}{if}(buffer == \textcolor{charliteral}{'\(\backslash\)0'})}
-\DoxyCodeLine{73                 \textcolor{keywordflow}{break};}
-\DoxyCodeLine{74             ret.push\_back(buffer);}
-\DoxyCodeLine{75         \};}
-\DoxyCodeLine{76 }
-\DoxyCodeLine{77         \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{78     \}}
+\DoxyCodeLine{68     \{}
+\DoxyCodeLine{69         std::string ret;}
+\DoxyCodeLine{70         \textcolor{keywordtype}{char} buffer;}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72         \textcolor{comment}{// For loop prevents infinite loop}}
+\DoxyCodeLine{73         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{size\_t} i = 0; i < \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a6cc313e98a341862be019c4707822672}{MAXIMUM\_STRING\_LENGTH}}; ++i)}
+\DoxyCodeLine{74         \{}
+\DoxyCodeLine{75             \textcolor{comment}{// Read a char at a time until we reach a null terminator.}}
+\DoxyCodeLine{76             \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(\&buffer, 1);}
+\DoxyCodeLine{77             \textcolor{keywordflow}{if}(buffer == \textcolor{charliteral}{'\(\backslash\)0'})}
+\DoxyCodeLine{78                 \textcolor{keywordflow}{break};}
+\DoxyCodeLine{79             ret.push\_back(buffer);}
+\DoxyCodeLine{80         \};}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{83     \}}
 
 \end{DoxyCode}
-
-
-References file, and MAXIMUM\+\_\+\+STRING\+\_\+\+LENGTH.
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a4b47f8fc38b5b5c0bee518e25cf40ad3}\label{class_sys_i_o_1_1_endian_reader_a4b47f8fc38b5b5c0bee518e25cf40ad3}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!readString@{readString}}
 \index{readString@{readString}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -467,24 +437,20 @@ std\+::string -\/ String read from stream
 \end{DoxyReturn}
 
 
-Definition at line 52 of file endian\+\_\+reader.\+cpp.
+Definition at line 57 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{53     \{}
-\DoxyCodeLine{54         \textcolor{comment}{// Create a string large enough to hold the data.}}
-\DoxyCodeLine{55         std::string ret(size, \textcolor{charliteral}{'\(\backslash\)0'});}
-\DoxyCodeLine{56 }
-\DoxyCodeLine{57         \textcolor{comment}{// Read into, and return the string.}}
-\DoxyCodeLine{58         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(ret.data(), size);}
-\DoxyCodeLine{59         \textcolor{keywordflow}{return} ret;}
-\DoxyCodeLine{60     \}}
+\DoxyCodeLine{58     \{}
+\DoxyCodeLine{59         \textcolor{comment}{// Create a string large enough to hold the data.}}
+\DoxyCodeLine{60         std::string ret(size, \textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62         \textcolor{comment}{// Read into, and return the string.}}
+\DoxyCodeLine{63         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.read(ret.data(), size);}
+\DoxyCodeLine{64         \textcolor{keywordflow}{return} ret;}
+\DoxyCodeLine{65     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}\label{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!seek@{seek}}
 \index{seek@{seek}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -502,35 +468,22 @@ Goto a specific offset.
 \end{DoxyParams}
 
 
-Definition at line 29 of file endian\+\_\+reader.\+cpp.
+Definition at line 34 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{30     \{}
-\DoxyCodeLine{31         \textcolor{comment}{// If requested offset exceeds the bounds of the file size. something is wrong.}}
-\DoxyCodeLine{32         \textcolor{keywordflow}{if}(offset > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
-\DoxyCodeLine{33             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
-\DoxyCodeLine{34         \textcolor{comment}{// If not seek and return;}}
-\DoxyCodeLine{35         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.seekg(offset);}
-\DoxyCodeLine{36         \textcolor{keywordflow}{return};}
-\DoxyCodeLine{37     \}}
+\DoxyCodeLine{35     \{}
+\DoxyCodeLine{36         \textcolor{comment}{// If requested offset exceeds the bounds of the file size. something is wrong.}}
+\DoxyCodeLine{37         \textcolor{keywordflow}{if}(offset > \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}{fileSize}})}
+\DoxyCodeLine{38             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}{EXCEPTION\_FILE\_BOUNDS}});}
+\DoxyCodeLine{39         \textcolor{comment}{// If not seek and return;}}
+\DoxyCodeLine{40         \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.seekg(offset);}
+\DoxyCodeLine{41         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{42     \}}
 
 \end{DoxyCode}
-
-
-References EXCEPTION\+\_\+\+FILE\+\_\+\+BOUNDS, file, and file\+Size.
-
-
-
-Referenced by pad(), peek(), and read\+Raw().
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_reader_ae4b69c946b0ff15d2cd89d3448ea5576_icgraph}
-\end{center}
-\end{figure}
+Here is the caller graph for this function\+:
+% FIG 7
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}\label{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!tell@{tell}}
 \index{tell@{tell}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -546,31 +499,18 @@ size\+\_\+t -\/ Stream position
 \end{DoxyReturn}
 
 
-Definition at line 46 of file endian\+\_\+reader.\+cpp.
+Definition at line 51 of file endian\+\_\+reader.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{47     \{}
-\DoxyCodeLine{48         \textcolor{comment}{// Return the current position in the ifstream}}
-\DoxyCodeLine{49         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.tellg();}
-\DoxyCodeLine{50     \}}
+\DoxyCodeLine{52     \{}
+\DoxyCodeLine{53         \textcolor{comment}{// Return the current position in the ifstream}}
+\DoxyCodeLine{54         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}{file}}.tellg();}
+\DoxyCodeLine{55     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
-
-
-Referenced by pad(), peek(), and read\+Raw().
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_reader_a66d087f8d98f74393be3d2c993045c5a_icgraph}
-\end{center}
-\end{figure}
+Here is the caller graph for this function\+:
+% FIG 8
 
 
 \doxysubsection{Member Data Documentation}
@@ -588,10 +528,6 @@ EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS -\/ \char`\"{}\+Unable To Access Requested F
 
 Definition at line 24 of file endian\+\_\+reader.\+h.
 
-
-
-Referenced by Endian\+Reader().
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}\label{class_sys_i_o_1_1_endian_reader_a8b7a5f63fc517f0113c12daeec7d2fc9}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!EXCEPTION\_FILE\_BOUNDS@{EXCEPTION\_FILE\_BOUNDS}}
 \index{EXCEPTION\_FILE\_BOUNDS@{EXCEPTION\_FILE\_BOUNDS}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -605,10 +541,6 @@ EXCEPTION\+\_\+\+FILE\+\_\+\+BOUNDS -\/ \char`\"{}\+Requested Offset Exceeds Bou
 
 
 Definition at line 26 of file endian\+\_\+reader.\+h.
-
-
-
-Referenced by read\+Raw(), and seek().
 
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}\label{class_sys_i_o_1_1_endian_reader_a9411bccd1dee271464b3f6d26c9c041a}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!file@{file}}
@@ -624,10 +556,6 @@ Stream access to the file being read.
 
 Definition at line 33 of file endian\+\_\+reader.\+h.
 
-
-
-Referenced by Endian\+Reader(), operator$>$$>$(), read\+Raw(), read\+String(), seek(), tell(), and $\sim$\+Endian\+Reader().
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_ab49d673fb16d325272519cc2ffe250b8}\label{class_sys_i_o_1_1_endian_reader_ab49d673fb16d325272519cc2ffe250b8}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!fileEndianness@{fileEndianness}}
 \index{fileEndianness@{fileEndianness}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -642,10 +570,6 @@ Endianness of the file, assigned at construction.
 
 Definition at line 35 of file endian\+\_\+reader.\+h.
 
-
-
-Referenced by operator$>$$>$().
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}\label{class_sys_i_o_1_1_endian_reader_afddabd2853f292424b8c79b728126df1}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!fileSize@{fileSize}}
 \index{fileSize@{fileSize}!SysIO::EndianReader@{SysIO::EndianReader}}
@@ -659,10 +583,6 @@ Size of the file on disk.
 
 
 Definition at line 31 of file endian\+\_\+reader.\+h.
-
-
-
-Referenced by Endian\+Reader(), read\+Raw(), and seek().
 
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_reader_a6cc313e98a341862be019c4707822672}\label{class_sys_i_o_1_1_endian_reader_a6cc313e98a341862be019c4707822672}} 
 \index{SysIO::EndianReader@{SysIO::EndianReader}!MAXIMUM\_STRING\_LENGTH@{MAXIMUM\_STRING\_LENGTH}}
@@ -680,11 +600,7 @@ Definition at line 28 of file endian\+\_\+reader.\+h.
 
 
 
-Referenced by read\+String().
-
-
-
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
 include/\+Endian\+Stream/\mbox{\hyperlink{endian__reader_8h}{endian\+\_\+reader.\+h}}\item 
-src/\mbox{\hyperlink{endian__reader_8cpp}{endian\+\_\+reader.\+cpp}}\end{DoxyCompactItemize}
+\mbox{\hyperlink{endian__reader_8cpp}{endian\+\_\+reader.\+cpp}}\end{DoxyCompactItemize}

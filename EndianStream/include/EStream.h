@@ -6,6 +6,9 @@
 #ifndef ESTREAM
 #define ESTREAM
 
+#define ENDIANSTREAM_VERSION_MAJOR @ENDIANSTREAM_VERSION_MAJOR@
+#define ENDIANSTREAM_VERSION_MINOR @ENDIANSTREAM_VERSION_MINOR@
+
 /// Includes for the EndianReader and EndianWriter classes.
 
 #include "EndianStream\endian_reader.h"

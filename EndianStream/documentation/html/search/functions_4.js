@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['read_58',['read',['../class_sys_i_o_1_1_endian_reader.html#addb631e7bdba343f052c29c14b199000',1,'SysIO::EndianReader']]],
-  ['readraw_59',['readRaw',['../class_sys_i_o_1_1_endian_reader.html#ab5945dcf80c04489bbf452e985874828',1,'SysIO::EndianReader::readRaw(const size_t &amp;, const size_t &amp;)'],['../class_sys_i_o_1_1_endian_reader.html#adc7d2d7e109914ea29416fd094b18145',1,'SysIO::EndianReader::readRaw(const size_t &amp;)']]],
-  ['readstring_60',['readString',['../class_sys_i_o_1_1_endian_reader.html#a4b47f8fc38b5b5c0bee518e25cf40ad3',1,'SysIO::EndianReader::readString(const size_t &amp;)'],['../class_sys_i_o_1_1_endian_reader.html#a0155190a4bcfd808171805a3a1133891',1,'SysIO::EndianReader::readString()']]]
+  ['pad_59',['pad',['../class_sys_i_o_1_1_endian_reader.html#a5a4a186a7a912d9b6f903e16fcaf3066',1,'SysIO::EndianReader::pad()'],['../class_sys_i_o_1_1_endian_writer.html#afa53855d6d3750c8e50168b5d512c880',1,'SysIO::EndianWriter::pad()']]],
+  ['peek_60',['peek',['../class_sys_i_o_1_1_endian_reader.html#a73e31876c39356d234cb76081e50b73a',1,'SysIO::EndianReader']]]
 ];

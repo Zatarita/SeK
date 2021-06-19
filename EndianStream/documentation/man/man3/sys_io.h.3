@@ -1,0 +1,62 @@
+.TH "include/EndianStream/sys_io.h" 3 "Sat Jun 19 2021" "Version 1.0" "Endian Stream" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/EndianStream/sys_io.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <algorithm>\fP
+.br
+\fC#include <cstddef>\fP
+.br
+\fC#include <vector>\fP
+.br
+
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI " \fBSysIO\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBByteArray\fP = std::vector< byte >"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum class \fBSysIO::ByteOrder\fP : unsigned char { \fBSysIO::Little\fP, \fBSysIO::Big\fP }"
+.br
+.RI "Valid System Endianness Options\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ByteOrder \fBSysIO::getSystemEndianness\fP ()"
+.br
+.RI "Determines system endianness\&. "
+.ti -1c
+.RI "template<class type > void \fBSysIO::EndianSwap\fP (type &data)"
+.br
+.RI "Swaps the endianness for the passed parameter\&. "
+.ti -1c
+.RI "template<class type > type \fBSysIO::EndianCast\fP (type data)"
+.br
+.RI "Swaps the endianness\&. Creates a copy of the original value\&. Like EndianSwap, but non-destructive\&. "
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "using \fBByteArray\fP =  std::vector<byte>"
+
+.PP
+Definition at line 14 of file sys_io\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Endian Stream from the source code\&.

@@ -1,0 +1,16 @@
+digraph "SysIO::EndianSwap"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="SysIO::EndianSwap",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="Swaps the endianness for the passed parameter."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="SysIO::EndianReader\l::operator\>\>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sys_i_o_1_1_endian_reader.html#a0be3c5a16959de2a32abffe48d7ec8ac",tooltip="Read some data from the stream into an existing object."];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="SysIO::EndianWriter\l::write",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sys_i_o_1_1_endian_writer.html#af2d2a1b0597db532735efa863cd24bd9",tooltip="Write some data to file. Adjusted for endianness if required."];
+  Node3 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="SysIO::EndianWriter\l::operator\<\<",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sys_i_o_1_1_endian_writer.html#a39ebe9e5866689843c6c6318bd6c7fa1",tooltip="Write wrapper for << override."];
+  Node3 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="SysIO::EndianWriter\l::writeAt",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a",tooltip="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..."];
+}

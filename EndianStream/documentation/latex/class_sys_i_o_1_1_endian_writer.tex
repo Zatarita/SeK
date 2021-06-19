@@ -16,6 +16,8 @@ A stream object that is aware of the endianness of the system, and the endiannes
 \begin{DoxyCompactList}\small\item\em prepare a file for writing, and designate the endianness of the stream \end{DoxyCompactList}\item 
 \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a0247099002d0f537ff0c8fa1c6e2b6c7}{$\sim$\+Endian\+Writer}} ()
 \begin{DoxyCompactList}\small\item\em Cleanup ofstream. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a5512e1b4eef515a557c4da51d15f0544}{close}} ()
+\begin{DoxyCompactList}\small\item\em close the stream \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}{seek}} (const size\+\_\+t \&)
 \begin{DoxyCompactList}\small\item\em Goto a specific offset. \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_afa53855d6d3750c8e50168b5d512c880}{pad}} (const size\+\_\+t \&)
@@ -32,18 +34,6 @@ void \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a10685417aba0395454a6a80c3
 \begin{DoxyCompactList}\small\item\em Write wrapper for $<$$<$ override. \end{DoxyCompactList}\item 
 {\footnotesize template$<$class type $>$ }\\void \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_ab55ccf005542874b01beb8fe7d75ef5a}{write\+At}} (const type \&data, const size\+\_\+t \&offset)
 \begin{DoxyCompactList}\small\item\em Write some data to file at a specific offset. Adjusted for endianness if required (note stream position remains unchanged) \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Private Attributes}
-\begin{DoxyCompactItemize}
-\item 
-std\+::ofstream \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}} \{\}
-\begin{DoxyCompactList}\small\item\em Stream access to the file being written to. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9bc1e7a0f04b173b7858685cc2dda37e}{file\+Endianness}} \{\}
-\begin{DoxyCompactList}\small\item\em Endianness of the file, assigned at construction. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Static Private Attributes}
-\begin{DoxyCompactItemize}
-\item 
-static constexpr const char $\ast$ \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a6c73fdc72b4e9d896375c152830c6dd3}{EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS}} \{\char`\"{}Unable To Access Requested File.\char`\"{}\}
-\begin{DoxyCompactList}\small\item\em EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS -\/ \char`\"{}\+Unable To Access Requested File.\char`\"{}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -77,18 +67,14 @@ Definition at line 10 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{10                                                                                  : \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9bc1e7a0f04b173b7858685cc2dda37e}{fileEndianness}}(endianness)}
+\DoxyCodeLine{10                                                                                  : fileEndianness(endianness)}
 \DoxyCodeLine{11     \{}
-\DoxyCodeLine{12         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.open(path, std::ios\_base::binary);}
-\DoxyCodeLine{13         \textcolor{keywordflow}{if}(!\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.is\_open())}
-\DoxyCodeLine{14             \textcolor{keywordflow}{throw} std::runtime\_error(\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a6c73fdc72b4e9d896375c152830c6dd3}{EXCEPTION\_FILE\_ACCESS}});}
+\DoxyCodeLine{12         file.open(path, std::ios\_base::binary);}
+\DoxyCodeLine{13         \textcolor{keywordflow}{if}(!file.is\_open())}
+\DoxyCodeLine{14             \textcolor{keywordflow}{throw} std::runtime\_error(EXCEPTION\_FILE\_ACCESS);}
 \DoxyCodeLine{15     \}}
 
 \end{DoxyCode}
-
-
-References EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS, and file.
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a0247099002d0f537ff0c8fa1c6e2b6c7}\label{class_sys_i_o_1_1_endian_writer_a0247099002d0f537ff0c8fa1c6e2b6c7}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!````~EndianWriter@{$\sim$EndianWriter}}
 \index{````~EndianWriter@{$\sim$EndianWriter}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -106,17 +92,38 @@ Definition at line 17 of file endian\+\_\+writer.\+cpp.
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{18     \{}
-\DoxyCodeLine{19         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.close();}
+\DoxyCodeLine{19         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a5512e1b4eef515a557c4da51d15f0544}{close}}();}
 \DoxyCodeLine{20     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
+Here is the call graph for this function\+:
+% FIG 0
 
 
 \doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a5512e1b4eef515a557c4da51d15f0544}\label{class_sys_i_o_1_1_endian_writer_a5512e1b4eef515a557c4da51d15f0544}} 
+\index{SysIO::EndianWriter@{SysIO::EndianWriter}!close@{close}}
+\index{close@{close}!SysIO::EndianWriter@{SysIO::EndianWriter}}
+\doxysubsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily void Sys\+IO\+::\+Endian\+Writer\+::close (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+close the stream 
+
+
+
+Definition at line 22 of file endian\+\_\+writer.\+cpp.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{23     \{}
+\DoxyCodeLine{24         file.close();}
+\DoxyCodeLine{25     \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+% FIG 1
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a39ebe9e5866689843c6c6318bd6c7fa1}\label{class_sys_i_o_1_1_endian_writer_a39ebe9e5866689843c6c6318bd6c7fa1}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!operator$<$$<$@{operator$<$$<$}}
 \index{operator$<$$<$@{operator$<$$<$}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -140,28 +147,19 @@ Write wrapper for $<$$<$ override.
 \end{DoxyTemplParams}
 
 
-Definition at line 72 of file endian\+\_\+writer.\+h.
+Definition at line 75 of file endian\+\_\+writer.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{73         \{}
-\DoxyCodeLine{74             \textcolor{comment}{// wrapper for write function}}
-\DoxyCodeLine{75             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}{write}}(data);}
-\DoxyCodeLine{76             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
-\DoxyCodeLine{77         \}}
+\DoxyCodeLine{76         \{}
+\DoxyCodeLine{77             \textcolor{comment}{// wrapper for write function}}
+\DoxyCodeLine{78             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}{write}}(data);}
+\DoxyCodeLine{79             \textcolor{keywordflow}{return} *\textcolor{keyword}{this};}
+\DoxyCodeLine{80         \}}
 
 \end{DoxyCode}
-
-
-References write().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_writer_a39ebe9e5866689843c6c6318bd6c7fa1_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 2
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_afa53855d6d3750c8e50168b5d512c880}\label{class_sys_i_o_1_1_endian_writer_afa53855d6d3750c8e50168b5d512c880}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!pad@{pad}}
 \index{pad@{pad}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -179,26 +177,17 @@ Treats n bytes as padding, skipping over them.
 \end{DoxyParams}
 
 
-Definition at line 27 of file endian\+\_\+writer.\+cpp.
+Definition at line 32 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{28     \{}
-\DoxyCodeLine{29         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.seekp(\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}{tell}}() + n);}
-\DoxyCodeLine{30     \}}
+\DoxyCodeLine{33     \{}
+\DoxyCodeLine{34         file.seekp(\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}{tell}}() + n);}
+\DoxyCodeLine{35     \}}
 
 \end{DoxyCode}
-
-
-References file, and tell().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_writer_afa53855d6d3750c8e50168b5d512c880_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 3
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}\label{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!seek@{seek}}
 \index{seek@{seek}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -216,30 +205,17 @@ Goto a specific offset.
 \end{DoxyParams}
 
 
-Definition at line 22 of file endian\+\_\+writer.\+cpp.
+Definition at line 27 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{23     \{}
-\DoxyCodeLine{24         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.seekp(offset);}
-\DoxyCodeLine{25     \}}
+\DoxyCodeLine{28     \{}
+\DoxyCodeLine{29         file.seekp(offset);}
+\DoxyCodeLine{30     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
-
-
-Referenced by write\+At().
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=328pt]{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb_icgraph}
-\end{center}
-\end{figure}
+Here is the caller graph for this function\+:
+% FIG 4
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}\label{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!tell@{tell}}
 \index{tell@{tell}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -255,30 +231,17 @@ size\+\_\+t -\/ Stream position
 \end{DoxyReturn}
 
 
-Definition at line 32 of file endian\+\_\+writer.\+cpp.
+Definition at line 37 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{33     \{}
-\DoxyCodeLine{34         \textcolor{keywordflow}{return} \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.tellp();}
-\DoxyCodeLine{35     \}}
+\DoxyCodeLine{38     \{}
+\DoxyCodeLine{39         \textcolor{keywordflow}{return} file.tellp();}
+\DoxyCodeLine{40     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
-
-
-Referenced by pad(), and write\+At().
-
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2_icgraph}
-\end{center}
-\end{figure}
+Here is the caller graph for this function\+:
+% FIG 5
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}\label{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!write@{write}}
 \index{write@{write}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -302,40 +265,22 @@ Write some data to file. Adjusted for endianness if required.
 \end{DoxyTemplParams}
 
 
-Definition at line 60 of file endian\+\_\+writer.\+h.
+Definition at line 63 of file endian\+\_\+writer.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{61         \{}
-\DoxyCodeLine{62             \textcolor{comment}{// swap the endianness if needed, then write the data}}
-\DoxyCodeLine{63             \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespace_sys_i_o_a54f3f7d0f5cf42065951ec1d198eade8}{SysIO::systemEndianness}} != \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9bc1e7a0f04b173b7858685cc2dda37e}{fileEndianness}})}
-\DoxyCodeLine{64                 \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{SysIO::EndianSwap}}(data);}
-\DoxyCodeLine{65             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&data), \textcolor{keyword}{sizeof}(type));}
-\DoxyCodeLine{66         \}}
+\DoxyCodeLine{64         \{}
+\DoxyCodeLine{65             \textcolor{comment}{// swap the endianness if needed, then write the data}}
+\DoxyCodeLine{66             \textcolor{keywordflow}{if} (SysIO::systemEndianness != fileEndianness)}
+\DoxyCodeLine{67                 \mbox{\hyperlink{namespace_sys_i_o_aaae01cabe0b56e28420b0974f95e7cb8}{SysIO::EndianSwap}}(data);}
+\DoxyCodeLine{68             file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(\&data), \textcolor{keyword}{sizeof}(type));}
+\DoxyCodeLine{69         \}}
 
 \end{DoxyCode}
-
-
-References Sys\+IO\+::\+Endian\+Swap(), file, file\+Endianness, and Sys\+IO\+::system\+Endianness.
-
-
-
-Referenced by operator$<$$<$(), and write\+At().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=326pt]{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9_cgraph}
-\end{center}
-\end{figure}
-Here is the caller graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=328pt]{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9_icgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 6
+Here is the caller graph for this function\+:
+% FIG 7
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_ab55ccf005542874b01beb8fe7d75ef5a}\label{class_sys_i_o_1_1_endian_writer_ab55ccf005542874b01beb8fe7d75ef5a}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!writeAt@{writeAt}}
 \index{writeAt@{writeAt}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -361,31 +306,22 @@ Write some data to file at a specific offset. Adjusted for endianness if require
 \end{DoxyTemplParams}
 
 
-Definition at line 84 of file endian\+\_\+writer.\+h.
+Definition at line 87 of file endian\+\_\+writer.\+h.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{85         \{}
-\DoxyCodeLine{86             \textcolor{comment}{// Store initial position, then seek to desired offset.}}
-\DoxyCodeLine{87             \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} initialPos \{\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}{tell}}()\};}
-\DoxyCodeLine{88             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}{seek}}(offset);}
-\DoxyCodeLine{89             \textcolor{comment}{// write the data, and return to where we were at the start.}}
-\DoxyCodeLine{90             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}{write}}(data);}
-\DoxyCodeLine{91             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}{seek}}(initialPos);}
-\DoxyCodeLine{92         \}}
+\DoxyCodeLine{88         \{}
+\DoxyCodeLine{89             \textcolor{comment}{// Store initial position, then seek to desired offset.}}
+\DoxyCodeLine{90             \textcolor{keyword}{const} \textcolor{keywordtype}{size\_t} initialPos \{\mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_a9efde7418bf4562b79961d791cfcc0a2}{tell}}()\};}
+\DoxyCodeLine{91             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}{seek}}(offset);}
+\DoxyCodeLine{92             \textcolor{comment}{// write the data, and return to where we were at the start.}}
+\DoxyCodeLine{93             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_af2d2a1b0597db532735efa863cd24bd9}{write}}(data);}
+\DoxyCodeLine{94             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_abf926be26256a8281b995aa0248020fb}{seek}}(initialPos);}
+\DoxyCodeLine{95         \}}
 
 \end{DoxyCode}
-
-
-References seek(), tell(), and write().
-
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{class_sys_i_o_1_1_endian_writer_ab55ccf005542874b01beb8fe7d75ef5a_cgraph}
-\end{center}
-\end{figure}
+Here is the call graph for this function\+:
+% FIG 8
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a10685417aba0395454a6a80c33009f8d}\label{class_sys_i_o_1_1_endian_writer_a10685417aba0395454a6a80c33009f8d}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!writeRaw@{writeRaw}}
 \index{writeRaw@{writeRaw}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -403,19 +339,15 @@ Write raw data to file from Byte\+Array (Byte\+Array is a vector$<$std\+::byte$>
 \end{DoxyParams}
 
 
-Definition at line 44 of file endian\+\_\+writer.\+cpp.
+Definition at line 49 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{45     \{}
-\DoxyCodeLine{46         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(raw.data()), raw.size());}
-\DoxyCodeLine{47     \}}
+\DoxyCodeLine{50     \{}
+\DoxyCodeLine{51         file.write(\textcolor{keyword}{reinterpret\_cast<}\textcolor{keyword}{const }\textcolor{keywordtype}{char}*\textcolor{keyword}{>}(raw.data()), raw.size());}
+\DoxyCodeLine{52     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
 \mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a62e415701ab21501ada4f241e071fb1c}\label{class_sys_i_o_1_1_endian_writer_a62e415701ab21501ada4f241e071fb1c}} 
 \index{SysIO::EndianWriter@{SysIO::EndianWriter}!writeString@{writeString}}
 \index{writeString@{writeString}!SysIO::EndianWriter@{SysIO::EndianWriter}}
@@ -435,81 +367,20 @@ Write a string to the stream. Null terminating if desired.
 \end{DoxyParams}
 
 
-Definition at line 37 of file endian\+\_\+writer.\+cpp.
+Definition at line 42 of file endian\+\_\+writer.\+cpp.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{38     \{}
-\DoxyCodeLine{39         \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.write(str.data(), str.size());}
-\DoxyCodeLine{40         \textcolor{keywordflow}{if}(nullTerminated)}
-\DoxyCodeLine{41             \mbox{\hyperlink{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}{file}}.write(\textcolor{keyword}{new} \textcolor{keywordtype}{char}\{\textcolor{charliteral}{'\(\backslash\)0'}\}, 1);}
-\DoxyCodeLine{42     \}}
+\DoxyCodeLine{43     \{}
+\DoxyCodeLine{44         file.write(str.data(), str.size());}
+\DoxyCodeLine{45         \textcolor{keywordflow}{if}(nullTerminated)}
+\DoxyCodeLine{46             file.write(\textcolor{keyword}{new} \textcolor{keywordtype}{char}\{\textcolor{charliteral}{'\(\backslash\)0'}\}, 1);}
+\DoxyCodeLine{47     \}}
 
 \end{DoxyCode}
-
-
-References file.
-
-
-
-\doxysubsection{Member Data Documentation}
-\mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a6c73fdc72b4e9d896375c152830c6dd3}\label{class_sys_i_o_1_1_endian_writer_a6c73fdc72b4e9d896375c152830c6dd3}} 
-\index{SysIO::EndianWriter@{SysIO::EndianWriter}!EXCEPTION\_FILE\_ACCESS@{EXCEPTION\_FILE\_ACCESS}}
-\index{EXCEPTION\_FILE\_ACCESS@{EXCEPTION\_FILE\_ACCESS}!SysIO::EndianWriter@{SysIO::EndianWriter}}
-\doxysubsubsection{\texorpdfstring{EXCEPTION\_FILE\_ACCESS}{EXCEPTION\_FILE\_ACCESS}}
-{\footnotesize\ttfamily constexpr const char$\ast$ Sys\+IO\+::\+Endian\+Writer\+::\+EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS \{\char`\"{}Unable To Access Requested File.\char`\"{}\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}, {\ttfamily [private]}}
-
-
-
-EXCEPTION\+\_\+\+FILE\+\_\+\+ACCESS -\/ \char`\"{}\+Unable To Access Requested File.\char`\"{}. 
-
-
-
-Definition at line 23 of file endian\+\_\+writer.\+h.
-
-
-
-Referenced by Endian\+Writer().
-
-\mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}\label{class_sys_i_o_1_1_endian_writer_acdb729e986659af661f0134e12357833}} 
-\index{SysIO::EndianWriter@{SysIO::EndianWriter}!file@{file}}
-\index{file@{file}!SysIO::EndianWriter@{SysIO::EndianWriter}}
-\doxysubsubsection{\texorpdfstring{file}{file}}
-{\footnotesize\ttfamily std\+::ofstream Sys\+IO\+::\+Endian\+Writer\+::file \{\}\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Stream access to the file being written to. 
-
-
-
-Definition at line 26 of file endian\+\_\+writer.\+h.
-
-
-
-Referenced by Endian\+Writer(), pad(), seek(), tell(), write(), write\+Raw(), write\+String(), and $\sim$\+Endian\+Writer().
-
-\mbox{\Hypertarget{class_sys_i_o_1_1_endian_writer_a9bc1e7a0f04b173b7858685cc2dda37e}\label{class_sys_i_o_1_1_endian_writer_a9bc1e7a0f04b173b7858685cc2dda37e}} 
-\index{SysIO::EndianWriter@{SysIO::EndianWriter}!fileEndianness@{fileEndianness}}
-\index{fileEndianness@{fileEndianness}!SysIO::EndianWriter@{SysIO::EndianWriter}}
-\doxysubsubsection{\texorpdfstring{fileEndianness}{fileEndianness}}
-{\footnotesize\ttfamily \mbox{\hyperlink{namespace_sys_i_o_a5c9f319a103b855b568a785fabd87e5c}{Byte\+Order}} Sys\+IO\+::\+Endian\+Writer\+::file\+Endianness \{\}\hspace{0.3cm}{\ttfamily [private]}}
-
-
-
-Endianness of the file, assigned at construction. 
-
-
-
-Definition at line 28 of file endian\+\_\+writer.\+h.
-
-
-
-Referenced by write().
-
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
 include/\+Endian\+Stream/\mbox{\hyperlink{endian__writer_8h}{endian\+\_\+writer.\+h}}\item 
-src/\mbox{\hyperlink{endian__writer_8cpp}{endian\+\_\+writer.\+cpp}}\end{DoxyCompactItemize}
+\mbox{\hyperlink{endian__writer_8cpp}{endian\+\_\+writer.\+cpp}}\end{DoxyCompactItemize}

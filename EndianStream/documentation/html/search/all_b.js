@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['write_33',['write',['../class_sys_i_o_1_1_endian_writer.html#af2d2a1b0597db532735efa863cd24bd9',1,'SysIO::EndianWriter']]],
-  ['writeat_34',['writeAt',['../class_sys_i_o_1_1_endian_writer.html#ab55ccf005542874b01beb8fe7d75ef5a',1,'SysIO::EndianWriter']]],
-  ['writeraw_35',['writeRaw',['../class_sys_i_o_1_1_endian_writer.html#a10685417aba0395454a6a80c33009f8d',1,'SysIO::EndianWriter']]],
-  ['writestring_36',['writeString',['../class_sys_i_o_1_1_endian_writer.html#a62e415701ab21501ada4f241e071fb1c',1,'SysIO::EndianWriter']]]
+  ['tell_34',['tell',['../class_sys_i_o_1_1_endian_reader.html#a66d087f8d98f74393be3d2c993045c5a',1,'SysIO::EndianReader::tell()'],['../class_sys_i_o_1_1_endian_writer.html#a9efde7418bf4562b79961d791cfcc0a2',1,'SysIO::EndianWriter::tell()']]]
 ];

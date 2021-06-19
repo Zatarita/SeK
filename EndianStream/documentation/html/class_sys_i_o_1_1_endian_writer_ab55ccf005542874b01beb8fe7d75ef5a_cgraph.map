@@ -1,7 +1,0 @@
-<map id="SysIO::EndianWriter::writeAt" name="SysIO::EndianWriter::writeAt">
-<area shape="rect" id="node1" title="Write some data to file at a specific offset. Adjusted for endianness if required (note stream positi..." alt="" coords="5,71,147,112"/>
-<area shape="rect" id="node2" href="$class_sys_i_o_1_1_endian_writer.html#abf926be26256a8281b995aa0248020fb" title="Goto a specific offset." alt="" coords="195,5,336,47"/>
-<area shape="rect" id="node3" href="$class_sys_i_o_1_1_endian_writer.html#a9efde7418bf4562b79961d791cfcc0a2" title="Gets the current position in the stream." alt="" coords="195,71,336,112"/>
-<area shape="rect" id="node4" href="$class_sys_i_o_1_1_endian_writer.html#af2d2a1b0597db532735efa863cd24bd9" title="Write some data to file. Adjusted for endianness if required." alt="" coords="195,136,336,177"/>
-<area shape="rect" id="node5" href="$namespace_sys_i_o.html#aaae01cabe0b56e28420b0974f95e7cb8" title="Swaps the endianness for the passed parameter." alt="" coords="384,143,523,170"/>
-</map>

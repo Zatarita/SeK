@@ -41,6 +41,9 @@ namespace SysIO
 		/// @brief Cleanup ifstream
 		~EndianReader();
 
+		/// @brief close the stream
+		void   close();
+
 		/// @brief Goto a specific offset
 		/// @param size_t Offset - Offset to the new stream position
         void   seek(const size_t&);

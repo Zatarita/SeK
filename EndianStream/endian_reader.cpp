@@ -2,76 +2,163 @@
     This file is a part of SeK: https://github.com/Zatarita/SeK
     last edit: Zatarita - 06/14/2021
 */
-
+#include <iostream>
 #include "include/EndianStream/endian_reader.h"
 
 namespace SysIO
 {
-    EndianReader::EndianReader(const std::string& path, const ByteOrder& endianness) : fileEndianness(endianness)
+    EndianReader::EndianReader(std::string_view path, const ByteOrder& endianness) : fileEndianness(endianness)
     {
-        // Try and open file
-        file.open(path, std::ios_base::in | std::ios_base::binary | std::ios_base::ate);
-        if(!file.is_open())
-            throw std::runtime_error(EXCEPTION_FILE_ACCESS);
-
-        // Get the file size if successful.
-        fileSize = file.tellg();
-        file.seekg(0);
-        return;
+        this->open(path);
     }
+
+    EndianReader::EndianReader(const ByteOrder& endianness) : fileEndianness(endianness)
+    {}
 
     EndianReader::~EndianReader()
     {
         // cleanup
-        close();
+        this->close();
+    }
+
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Exceptions
+    bool EndianReader::hasExcept() const noexcept
+    {
+        return EXCEPTION_STATUS != nullptr;
+    }
+
+    const std::string_view EndianReader::getExcept() const noexcept
+    {
+        if (this->hasExcept())
+            return { EXCEPTION_STATUS };
+        return { "" };
+    }
+
+    const std::string_view EndianReader::releaseExcept() noexcept
+    {
+        std::string_view ret{ this->getExcept() };
+        this->clearExcept();
+
+        return ret;
+    }
+
+    void EndianReader::clearExcept() noexcept
+    {
+        EXCEPTION_STATUS = nullptr;
+    }
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Stream State
+    void EndianReader::open(std::string_view path)
+    {
+        // If a file is open, close it.
+        this->close();
+        file.open( static_cast<std::string>(path), std::ios_base::in | std::ios_base::binary );
+
+        this->isOpen(); // Set EXCEPTION_STATUS if file didnt open.
     }
 
     void EndianReader::close()
     {
-        file.close();
+        // Close the stream
+        if ( this->isOpen() ) file.close();
     }
 
-    void EndianReader::seek(const size_t& offset)
+    bool EndianReader::isOpen()
     {
+        if (file.is_open())
+            return true;
+        EXCEPTION_STATUS = EXCEPTION_FILE_ACCESS;
+        return false;
+    }
+
+    void EndianReader::setEndianness(const SysIO::ByteOrder& newEndianness)
+    {
+        fileEndianness = newEndianness;
+    }
+
+    const size_t& EndianReader::getFileSize() noexcept
+    {
+        if ( !this->isOpen() ) return (fileSize = 0, fileSize);
+        const size_t init_pos{ this->tell() };
+
+        if (!fileSize)
+        {
+            file.seekg(0, std::ios_base::end);
+            fileSize = file.tellg();
+            file.seekg(init_pos);
+        }
+
+        return fileSize;
+    }
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Stream Manipulation
+    void EndianReader::seek(const size_t& offset, const std::ios_base::seekdir& dir)
+    {
+        if ( !this->isOpen() ) return;
+
         // If requested offset exceeds the bounds of the file size. something is wrong.
-        if(offset > fileSize)
-            throw std::runtime_error(EXCEPTION_FILE_BOUNDS);
-        // If not seek and return;
-        file.seekg(offset);
-        return;
+        if(offset > this->getFileSize()) EXCEPTION_STATUS = EXCEPTION_FILE_BOUNDS;
+
+        file.seekg(offset, dir);
     }
 
-    void EndianReader::pad(const size_t& n)
+    const bool EndianReader::isInBounds(const size_t& offset)
     {
-        // Skip over padding by seeking to the current position + padding size
-        seek( tell() + n );
-        return;
+        if (offset < this->getFileSize())
+            return true;
+        EXCEPTION_STATUS = EXCEPTION_FILE_BOUNDS;
+        return false;
     }
 
-    size_t EndianReader::tell()
+    const size_t EndianReader::tell()
     {
+        if ( !this->isOpen() ) return 0;
+
         // Return the current position in the ifstream
         return file.tellg();
     }
 
-    std::string EndianReader::readString(const size_t& size)
+    void EndianReader::pad( const size_t& n )
     {
+        // Skip over padding by seeking to the current position + padding size
+        try { this->seek(tell() + n); }
+        catch (...) {}  // If except, we've reached eof. No need to actually except.
+
+        return;
+    }
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Stream Access
+    std::string EndianReader::readString( const size_t& size )
+    {
+        if (!this->isOpen()) return "";
+
         // Create a string large enough to hold the data.
         std::string ret(size, '\0');
 
         // Read into, and return the string.
-        file.read(ret.data(), size);
+        file.read( ret.data(), size );
         return ret;
     }
 
     std::string EndianReader::readString()
     {
+        if ( !this->isOpen() ) return "";
+
         std::string ret;
         char buffer;
 
-        // For loop prevents infinite loop
-        for(size_t i = 0; i < MAXIMUM_STRING_LENGTH; ++i)
+        // Try to reduce memory reallocations by reserving 32 chars.
+        ret.reserve(DEFAULT_STRING_LENGTH);
+
+        // MAXIMUM_STRING_LENGTH prevents infinite loop
+        for(size_t i = 0; i <= MAXIMUM_STRING_LENGTH; ++i)
         {
+            if (i == MAXIMUM_STRING_LENGTH)
+            {
+                EXCEPTION_STATUS = EXCEPTION_RECURSION;
+                return "";
+            }
             // Read a char at a time until we reach a null terminator.
             file.read(&buffer, 1);
             if(buffer == '\0')
@@ -82,34 +169,69 @@ namespace SysIO
         return ret;
     }
 
-    ByteArray EndianReader::readRaw(const size_t& offset, const size_t& n)
+    ByteArray EndianReader::readRaw(const size_t& offset, size_t n)
     {
+        // If there is no file open, or the base offset exceeds the bounds of the file
+        if ( !this->isOpen() || this->isInBounds(offset) ) return ByteArray();
+
+        // If the requested data starts in the file, but exceeds the end of the file, adjust n to be remaining bytes to eof
+        if ( this->isInBounds(offset + n) ) n = this->getFileSize() - offset;
+
         // Store the original position, and create a vector<byte> of the right size
-        const size_t initPos { tell() };
+        const size_t initPos { this->tell() };
         ByteArray ret(n);
 
-        // If the end of the block exceeds the file size, we'll end up with an overflow.
-        if(offset + n > fileSize)
-            throw std::runtime_error(EXCEPTION_FILE_BOUNDS);
-
         // Seek to the beginning of the data, Read the data, then return to initPos
-        seek(offset);
+        this->seek(offset);
         file.read(reinterpret_cast<char*>(ret.data()), n);
-        seek(initPos);
+        this->seek(initPos);
+
+        // Note if the entire chunk wasn't read, the getException function will return a EXCEPTION_FILE_BOUNDS, but will return fine.
+        return ret;
+    }
+
+    ByteArray EndianReader::readRaw(size_t n)
+    {
+        if (!this->isOpen()) return ByteArray();
+
+        // If the requested data exceeds file size, just read to end.
+        if (this->tell() + n > this->getFileSize()) n = this->getFileSize() - this->tell();
+
+        // Create a ByteArray of 'n' width. Read from the file into byte array
+        ByteArray ret(n);
+        file.read(reinterpret_cast<char*>(ret.data()), n);
 
         return ret;
     }
 
-    ByteArray EndianReader::readRaw(const size_t& n)
+    template <class T> T EndianReader::read()
     {
-        // If the end of the block exceeds the file size, we'll end up with an overflow.
-        if(tell() + n > fileSize)
-            throw std::runtime_error(EXCEPTION_FILE_BOUNDS);
+        T ret{};
+        this->readInto(ret);
+        return ret;
+    }
 
-        // Create a ByteArray of 'size' width. Read from the file into byte array
-        ByteArray ret(n);
-        file.read(reinterpret_cast<char*>(ret.data()), n);
+    template <class T> void EndianReader::readInto(T& data)
+    {
+        // Read data from the stream, swap the endianness if needed.
+        file.read(reinterpret_cast<char*>(&data), sizeof(data));
+        if (SysIO::systemEndianness != fileEndianness)
+            SysIO::EndianSwap(data);
+        return *this;
+    }
+
+    template <class T> T EndianReader::peek()
+    {
+        // Read data of a certain type, seek the stream back, and return the data
+        T ret{ this->read<T>() };
+        seek(tell() - sizeof(T));
 
         return ret;
+    }
+
+    template <class T> EndianReader& EndianReader::operator>>(T& data)
+    {
+        this->readInto(data);
+        return *this;
     }
 }

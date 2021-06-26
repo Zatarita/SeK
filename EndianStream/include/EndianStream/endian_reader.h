@@ -9,6 +9,7 @@
 
 #include <fstream>
 #include <string>
+#include <string_view>
 #include <exception>
 
 namespace SysIO
@@ -19,13 +20,18 @@ namespace SysIO
 	**/
 	class EndianReader
 	{
-	    public:
 		/// EXCEPTION_FILE_ACCESS - "Unable To Access Requested File."
-	    static constexpr const char* EXCEPTION_FILE_ACCESS {"Unable To Access Requested File."};
+	    static constexpr const char* EXCEPTION_FILE_ACCESS { "[EXCEPTION_FILE_ACCESS] Unable To Access Requested File." };
 		/// EXCEPTION_FILE_BOUNDS - "Requested Offset Exceeds Bounds Of The File."
-	    static constexpr const char* EXCEPTION_FILE_BOUNDS {"Requested Offset Exceeds Bounds Of The File."};
+		static constexpr const char* EXCEPTION_FILE_BOUNDS { "[EXCEPTION_FILE_BOUNDS] Requested Offset Exceeds Bounds Of The File." };
+		/// EXCEPTION_FILE_BOUNDS - "Requested Offset Exceeds Bounds Of The File."
+		static constexpr const char* EXCEPTION_RECURSION   { "[EXCEPTION_RECURSION] Maximum Recursion Reached While Attempting to Read String" };
 		/// MAXIMUM_STRING_LENGTH - 0xffff (65535)
-        static const uint16_t        MAXIMUM_STRING_LENGTH {0xffff};
+		static const uint32_t        MAXIMUM_STRING_LENGTH{ 0xffffffff };
+		/// DEFAULT_STRING_LENGTH - 0x20 (32)
+		static const size_t	         DEFAULT_STRING_LENGTH{ 0x20 };
+		/// Pointer to last exception
+		const char*					 EXCEPTION_STATUS{ nullptr };
 
 		/// Size of the file on disk
 	    size_t        fileSize {};
@@ -33,26 +39,55 @@ namespace SysIO
 		std::ifstream file {};
 		/// Endianness of the file, assigned at construction
 		ByteOrder     fileEndianness {};
+
 	public:
-		/// @brief Load a file, and designate the endianness of the stream
-		/// @param std::string Path - File the stream is designated to read
+		/// @brief Constructor wrapping open()
+		/// @param std::string_view Path - File the stream is designated to read
 		/// @param ByteOrder Endianness - Endianness of the file in question
-		EndianReader(const std::string&, const ByteOrder&);
+		EndianReader(std::string_view, const ByteOrder&);
+		/// @brief default constructor
+		EndianReader(const ByteOrder&);
+
 		/// @brief Cleanup ifstream
 		~EndianReader();
 
+		/// @brief Tells if an exception has happened
+		bool				   hasExcept() const noexcept;
+		/// @brief Returns the exception string.
+		const std::string_view getExcept() const noexcept;
+		/// @brief Clear any exception
+		void				   clearExcept() noexcept;
+		/// @brief Returns the exception string, and clears the exception
+		const std::string_view releaseExcept() noexcept;
+
+
+		/// @brief Load a file, and designate the endianness of the stream
+		/// @param std::string Path - File the stream is designated to read
+		/// @param ByteOrder Endianness - Endianness of the file in question
+		void open(std::string_view);
 		/// @brief close the stream
-		void   close();
+		void close();
+		/// @brief Tells if the underlying stream is currently open (also sets EXCEPTION_FILE_ACCESS on failure)
+		bool isOpen();
+		/// @brief (re)assigns the file endianness
+		void setEndianness(const SysIO::ByteOrder&);
+		/// @brief Gets the file size, or calculates it if it hasn't already. (must always return a value)
+		const size_t& getFileSize() noexcept;
 
 		/// @brief Goto a specific offset
 		/// @param size_t Offset - Offset to the new stream position
-        void   seek(const size_t&);
-		/// @brief Treats n bytes as padding, skipping over them
-		/// @param size_t n - Number of bytes as padding
-        void   pad (const size_t&);
+		/// @param size_t Dir - Seek direction. default beginning
+        void  seek(const size_t&, const std::ios_base::seekdir& = std::ios_base::beg);
+		/// @brief Validates a specific offset is within the bounds.
+		/// @param size_t - offset to validate
+		/// @return const bool - If offset violated bounds. (also sets EXCEPTION_STATUS on failure)
+		const bool isInBounds(const size_t&);
 		/// @brief Gets the current position in the stream
 		/// @return size_t - Stream position
-        size_t tell();
+		const size_t tell();
+		/// @brief Treats n bytes as padding, skipping over them
+		/// @param size_t n - Number of bytes as padding
+		void  pad(const size_t&);
 
 		/// @brief Read a fixed length string from the stream
 		/// @param size_t size - Size of the string
@@ -66,53 +101,29 @@ namespace SysIO
 		/// @param size_t offset - Offset to start read from
 		/// @param size_t n - Number of bytes to read
 		/// @return ByteArray - Range of bytes requested
-        ByteArray readRaw(const size_t&, const size_t&);
+		ByteArray readRaw(const size_t&, size_t);
 		/// @brief Read n bytes from current position
 		/// @param size_t n - Number for bytes to read
 		/// @return ByteArray - Range of bytes requested
-        ByteArray readRaw(const size_t&);
+		ByteArray readRaw(size_t);
 
-		// Template Functions
 		/// @brief Read some data from the stream. Creates a new instance of type
-		/// @tparam type - Template type
-		/// @return type - A new instance of 'type' read from the stream and adjusted for endianness
-		template <class type>
-		type read()
-		{
-		    // Read data of a certain type and return it.
-		    type ret;
-		    *this >> ret;
-            return ret;
-		}
-
+		/// @tparam Return type 'T' of the data
+		/// @return type - A new instance of T read from the stream and adjusted for endianness
+		template <class T> T read();
+		/// @brief Read some data from the stream and place it into an object.
+		/// @tparam Type of data to be read from stream
+		/// @return type - A new instance of T read from the stream and adjusted for endianness
+		template <class T> void readInto(T& data);
 		/// @brief Read some data from the stream, without updating stream position. Creates a new instance of type.
-		/// @tparam type - Template Type 
+		/// @tparam return type 'T' of the data
 		/// @return type - A new instance of 'type' read from the stream and adjusted for endianness
-		template <class type>
-		type peek()
-		{
-		    // Read data of a certain type, seek the stream back, and return the data
-		    type ret;
-		    *this >> ret;
-
-		    seek( tell() - sizeof(type) );
-
-		    return ret;
-		}
-
+		template <class T> T peek();
 		/// @brief Read some data from the stream into an existing object.
 		/// @tparam type - Template type
 		/// @param data - Destination for the data read in from stream
 		/// @return EndianReader& - Returns it's self for chaining of >> operators
-		template <class type>
-		EndianReader& operator>>(type& data)
-		{
-		    // Read data from the stream, swap the endianness if needed.
-			file.read(reinterpret_cast<char*>( &data ), sizeof(data));
-			if (SysIO::systemEndianness != fileEndianness)
-				SysIO::EndianSwap(data);
-            return *this;
-		};
+		template <class T> EndianReader& operator>>(T& data);
 	};
 }
 #endif

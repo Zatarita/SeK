@@ -6,13 +6,32 @@
 #ifndef ESTREAM
 #define ESTREAM
 
-#define ENDIANSTREAM_VERSION_MAJOR @ENDIANSTREAM_VERSION_MAJOR@
-#define ENDIANSTREAM_VERSION_MINOR @ENDIANSTREAM_VERSION_MINOR@
-
 /// Includes for the EndianReader and EndianWriter classes.
 
 #include "EndianStream\endian_reader.h"
 #include "EndianStream\endian_writer.h"
+#include "EndianStream\sys_io.h"
 
+#include <string_view>
+
+SysIO::EndianReader LEndianReader(std::string_view path)
+{
+    return SysIO::EndianReader(path, SysIO::ByteOrder::Little);
+}
+
+SysIO::EndianReader BEndianReader(std::string_view path)
+{
+    return SysIO::EndianReader(path, SysIO::ByteOrder::Big);
+}
+
+SysIO::EndianWriter LEndianWriter(std::string_view path)
+{
+    return SysIO::EndianWriter(path, SysIO::ByteOrder::Little);
+}
+
+SysIO::EndianWriter BEndianWriter(std::string_view path)
+{
+    return SysIO::EndianWriter(path, SysIO::ByteOrder::Big);
+}
 
 #endif // ESTREAM_H_INCLUDED

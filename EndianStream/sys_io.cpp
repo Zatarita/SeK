@@ -14,5 +14,8 @@ namespace SysIO
 		unsigned char* rawData = new(&one) unsigned char[2];
 		// If the first byte of the short in raw memory is 1 our system is little endian; else, big
 		return rawData[0] ? ByteOrder::Little : ByteOrder::Big;
+
+		// NOTE * This function may throw compiler warning stating we're using
+		// unitialized memory. This is false. The memory was initialized when we created "one"
 	}
 }

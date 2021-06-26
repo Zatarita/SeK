@@ -9,6 +9,8 @@
 
 #include <fstream>
 #include <exception>
+#include <string_view>
+
 
 namespace SysIO
 {
@@ -30,12 +32,19 @@ namespace SysIO
         /// @brief prepare a file for writing, and designate the endianness of the stream
         /// @param std::string Path - File the stream is designated to write to
         /// @param ByteOrder Endianness - Endianness of the file in question
-        EndianWriter(const std::string&, const ByteOrder&);
+        EndianWriter(std::string_view, const ByteOrder&);
+        EndianWriter(const ByteOrder&);
         /// @brief Cleanup ofstream
         ~EndianWriter();
 
+        /// @brief Load a file, and designate the endianness of the stream
+        /// @param std::string Path - File the stream is designated to read
+        /// @param ByteOrder Endianness - Endianness of the file in question
+        void   open(std::string_view);
         /// @brief close the stream
         void   close();
+
+        bool is_open();
 
         /// @brief Goto a specific offset
         /// @param size_t Offset - Offset to the new stream position
@@ -45,15 +54,15 @@ namespace SysIO
         void   pad (const size_t&);
         /// @brief Gets the current position in the stream
         /// @return size_t - Stream position
-        size_t tell();
+        const size_t tell();
 
         /// @brief Write a string to the stream. Null terminating if desired
         /// @param std::string str - String to write to the stream
         /// @param bool nullTerminated - adds the null terminator to the end of the write
         void writeString(const std::string&, const bool& = false);
         /// @brief Write raw data to file from ByteArray (ByteArray is a vector<std::byte>)
-        /// @param ByteArray data - Raw data to write to file
-        void writeRaw   (const ByteArray&);
+        /// @param ByteView data - Raw data to write to file
+        void writeRaw   (ByteView);
 
         // Template Functions
         /// @brief Write some data to file. Adjusted for endianness if required
@@ -86,12 +95,11 @@ namespace SysIO
         template <class type>
         void writeAt(const type& data, const size_t& offset)
         {
-            // Store initial position, then seek to desired offset.
             const size_t initialPos {tell()};
-            seek(offset);
-            // write the data, and return to where we were at the start.
-            write(data);
-            seek(initialPos);
+
+            this->seek(offset);
+            this->write(data);
+            this->seek(initialPos);
         }
     };
 }

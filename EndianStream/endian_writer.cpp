@@ -5,23 +5,41 @@
 
 #include "include/EndianStream/endian_writer.h"
 
+
+
 namespace SysIO
 {
-    EndianWriter::EndianWriter(const std::string& path, const ByteOrder& endianness) : fileEndianness(endianness)
-    {
-        file.open(path, std::ios_base::binary);
-        if(!file.is_open())
-            throw std::runtime_error(EXCEPTION_FILE_ACCESS);
+    EndianWriter::EndianWriter(std::string_view path, const ByteOrder& endianness) :
+        fileEndianness(endianness)
+    { 
+        this->open(path); 
     }
+
+    EndianWriter::EndianWriter(const ByteOrder& endianness) : 
+        fileEndianness(endianness) 
+    {}
 
     EndianWriter::~EndianWriter()
     {
-        close();
+        this->close();
+    }
+
+    void EndianWriter::open(std::string_view path)
+    {
+        if (this->is_open()) this->close();
+
+        file.open(std::string(path).c_str(), std::ios_base::binary);
+        if (!this->is_open()) throw std::runtime_error(EXCEPTION_FILE_ACCESS);
     }
 
     void EndianWriter::close()
     {
         file.close();
+    }
+
+    bool EndianWriter::is_open()
+    {
+        return file.is_open();
     }
 
     void EndianWriter::seek(const size_t& offset)
@@ -31,10 +49,11 @@ namespace SysIO
 
     void EndianWriter::pad(const size_t& n)
     {
-        file.seekp(tell() + n);
+        ByteArray temp(n, {});
+        writeRaw( { temp } );
     }
 
-    size_t EndianWriter::tell()
+    const size_t EndianWriter::tell()
     {
         return file.tellp();
     }
@@ -46,8 +65,8 @@ namespace SysIO
             file.write(new char{'\0'}, 1);
     }
 
-    void EndianWriter::writeRaw(const ByteArray& raw)
+    void EndianWriter::writeRaw(ByteView raw)
     {
-        file.write(reinterpret_cast<const char*>(raw.data()), raw.size());
+        file.write(reinterpret_cast<const char*>( raw.data()), raw.size() );
     }
 }

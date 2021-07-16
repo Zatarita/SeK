@@ -18,4 +18,34 @@ namespace SysIO
 		// NOTE * This function may throw compiler warning stating we're using
 		// unitialized memory. This is false. The memory was initialized when we created "one"
 	}
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Exceptions
+    void StreamExcept::setException(const char* data) noexcept
+    {
+        EXCEPTION_STATUS = data;
+    }
+
+    const bool StreamExcept::hasException() const noexcept
+    {
+        return EXCEPTION_STATUS == nullptr;
+    }
+
+    std::string_view StreamExcept::getException() const noexcept
+    {
+        if (this->hasException())
+            return { EXCEPTION_STATUS };
+        return { "" };
+    }
+
+    void StreamExcept::clearException() noexcept
+    {
+        EXCEPTION_STATUS = nullptr;
+    }
+
+    std::string_view StreamExcept::releaseException() noexcept
+    {
+        auto exception = getException();
+        this->clearException();
+        return exception;
+    }
 }

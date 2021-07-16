@@ -11,6 +11,7 @@
 #include <vector>
 #include <span>
 #include <string>
+#include <string_view>
 #include <string.h>
 #include <optional>
 
@@ -18,8 +19,14 @@ using std::byte;
 using ByteArray = std::vector<byte>;
 using ByteView  = std::span<byte>;
 
+const static inline ByteArray EMPTY_ARRAY;
+
 namespace SysIO
 {
+	class StreamTypeObject {}; // Helper class for type validation
+	class StreamInputObject : StreamTypeObject {}; // Helper class for type validation
+	class StreamOutputObject : StreamTypeObject {}; // Helper class for type validation
+
 	/// @brief Valid System Endianness Options
 	enum class ByteOrder : unsigned char
 	{
@@ -44,95 +51,16 @@ namespace SysIO
 		std::reverse(rawData, rawData + sizeof(type));
 	}
 
-	template <class type>
-	static bool endianPlace(ByteView stream, const size_t& position, const type& data, const ByteOrder& endianness = ByteOrder::Little)
+	class StreamExcept
 	{
-		if (position > stream.size() || position + sizeof(type) > stream.size())
-			return false;
-		type* place = new(stream.data() + position) type{ data };
-		if (endianness != systemEndianness)
-			EndianSwap(place);
-	}
-
-	template <class type>
-	static type endianGet(ByteView stream, size_t& position, const ByteOrder& endianness = ByteOrder::Little)
-	{
-		if (position > stream.size())
-			return false;
-		type newData = *( new(stream.data() + position) type );
-		if (endianness != systemEndianness)
-			EndianSwap(newData);
-
-		position += sizeof(type);
-		return newData;
-	}
-
-	static std::string readString(ByteView stream, size_t& position, std::optional<size_t> size)
-	{
-		std::string ret;
-		size_t stringLength{};
-
-		if (size)
-		{
-			stringLength = *size;
-			ret.resize(stringLength);
-			std::memcpy(ret.data(), stream.data() + position, stringLength);
-		}
-		else
-		{
-			for (;; ++stringLength)
-			{
-				if (position + stringLength > stream.size())
-					return "";
-				if (stream[position + stringLength] == std::byte{ '\0' })
-					break;
-			}
-			std::memcpy(ret.data(), stream.data() + position, stringLength);
-		}
-
-		position += stringLength;
-		return ret;
-	}
-
-	struct byteReader
-	{
-		ByteView rawData;
-		ByteOrder endianness;
-		size_t streamPos{};
-
-		byteReader(const ByteView& data, const ByteOrder& byteorder = ByteOrder::Little) :
-			rawData(data),
-			endianness(byteorder)
-		{}
-
-		template <class type>
-		type read()
-		{
-			return SysIO::endianGet(rawData, streamPos, endianness);
-		}
-
-		std::string getString(std::optional<size_t> size)
-		{
-			return SysIO::readString(rawData, streamPos, size);
-		}
-
-		template <class type>
-		byteReader& operator<<(type& data)
-		{
-			data = SysIO::endianGet(rawData, streamPos, endianness);
-			return *this;
-		}
-
-		byteReader& operator<<(std::string& data)
-		{
-			data = SysIO::readString(rawData, streamPos, std::nullopt);
-		}
-
-		void seek(const size_t& pos)
-		{ streamPos = pos; }
-
-		const size_t& tell()
-		{ return streamPos; }
+	private:
+		const char*      EXCEPTION_STATUS{ nullptr };
+	public:
+		void			 setException(const char*) noexcept;
+		const bool       hasException() const noexcept;
+		std::string_view getException() const noexcept;
+		std::string_view releaseException() noexcept;
+		void             clearException() noexcept;
 	};
 }
 

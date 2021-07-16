@@ -18,7 +18,7 @@ namespace SysIO
 	* A stream object that is aware of the endianness of the system, and the endianness of the file being read.
 	* the stream can translate the data to the systems native endianness as it reads in the data.
 	**/
-	class EndianReader
+	class EndianReader : public StreamExcept, public StreamInputObject
 	{
 		/// EXCEPTION_FILE_ACCESS - "Unable To Access Requested File."
 	    static constexpr const char* EXCEPTION_FILE_ACCESS { "[EXCEPTION_FILE_ACCESS] Unable To Access Requested File." };
@@ -44,21 +44,12 @@ namespace SysIO
 		/// @brief Constructor wrapping open()
 		/// @param std::string_view Path - File the stream is designated to read
 		/// @param ByteOrder Endianness - Endianness of the file in question
-		EndianReader(std::string_view, const ByteOrder&);
+		EndianReader(std::string_view, const ByteOrder& = SysIO::ByteOrder::Little);
 		/// @brief default constructor
 		EndianReader(const ByteOrder&);
 
 		/// @brief Cleanup ifstream
 		~EndianReader();
-
-		/// @brief Tells if an exception has happened
-		bool				   hasExcept() const noexcept;
-		/// @brief Returns the exception string.
-		const std::string_view getExcept() const noexcept;
-		/// @brief Clear any exception
-		void				   clearExcept() noexcept;
-		/// @brief Returns the exception string, and clears the exception
-		const std::string_view releaseExcept() noexcept;
 
 
 		/// @brief Load a file, and designate the endianness of the stream
@@ -107,23 +98,50 @@ namespace SysIO
 		/// @return ByteArray - Range of bytes requested
 		ByteArray readRaw(size_t);
 
+		std::shared_ptr<ByteArray> get(size_t offset, size_t size);
+
 		/// @brief Read some data from the stream. Creates a new instance of type
 		/// @tparam Return type 'T' of the data
 		/// @return type - A new instance of T read from the stream and adjusted for endianness
-		template <class T> T read();
+		template <class T> T read()
+		{
+			T ret{};
+			this->readInto(ret);
+			return ret;
+		}
+
 		/// @brief Read some data from the stream and place it into an object.
 		/// @tparam Type of data to be read from stream
 		/// @return type - A new instance of T read from the stream and adjusted for endianness
-		template <class T> void readInto(T& data);
+		template <class T> void readInto(T& data)
+		{
+			// Read data from the stream, swap the endianness if needed.
+			file.read(reinterpret_cast<char*>(&data), sizeof(data));
+			if (SysIO::systemEndianness != fileEndianness)
+				SysIO::EndianSwap(data);
+		}
+
 		/// @brief Read some data from the stream, without updating stream position. Creates a new instance of type.
 		/// @tparam return type 'T' of the data
 		/// @return type - A new instance of 'type' read from the stream and adjusted for endianness
-		template <class T> T peek();
+		template <class T> T peek()
+		{
+			// Read data of a certain type, seek the stream back, and return the data
+			T ret{ this->read<T>() };
+			seek(tell() - sizeof(T));
+
+			return ret;
+		}
+
 		/// @brief Read some data from the stream into an existing object.
 		/// @tparam type - Template type
 		/// @param data - Destination for the data read in from stream
 		/// @return EndianReader& - Returns it's self for chaining of >> operators
-		template <class T> EndianReader& operator>>(T& data);
+		template <class T> EndianReader& operator>>(T& data)
+		{
+			this->readInto(data);
+			return *this;
+		}
 	};
 }
 #endif

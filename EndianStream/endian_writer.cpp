@@ -24,12 +24,22 @@ namespace SysIO
         this->close();
     }
 
+
+    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Stream State
     void EndianWriter::open(std::string_view path)
     {
-        if (this->is_open()) this->close();
+        if ( this->isOpen() ) this->close();
 
         file.open(std::string(path).c_str(), std::ios_base::binary);
-        if (!this->is_open()) throw std::runtime_error(EXCEPTION_FILE_ACCESS);
+        this->isOpen();
+    }
+
+    bool EndianWriter::isOpen()
+    {
+        if (file.is_open())
+            return true;
+        this->setException(EXCEPTION_FILE_ACCESS);
+        return false;
     }
 
     void EndianWriter::close()
@@ -37,9 +47,9 @@ namespace SysIO
         file.close();
     }
 
-    bool EndianWriter::is_open()
+    void EndianWriter::setEndianness(const SysIO::ByteOrder& newEndianness)
     {
-        return file.is_open();
+        fileEndianness = newEndianness;
     }
 
     void EndianWriter::seek(const size_t& offset)
@@ -49,8 +59,8 @@ namespace SysIO
 
     void EndianWriter::pad(const size_t& n)
     {
-        ByteArray temp(n, {});
-        writeRaw( { temp } );
+        ByteArray padding(n, {});
+        writeRaw( { padding } );
     }
 
     const size_t EndianWriter::tell()
@@ -58,15 +68,20 @@ namespace SysIO
         return file.tellp();
     }
 
-    void EndianWriter::writeString(const std::string& str, const bool& nullTerminated)
+    void EndianWriter::writeString(std::string_view str, const bool& nullTerminated)
     {
-        file.write(str.data(), str.size());
+        file.write( str.data(), str.size() );
         if(nullTerminated)
-            file.write(new char{'\0'}, 1);
+            file.write( new char{'\0'}, 1 );
     }
 
     void EndianWriter::writeRaw(ByteView raw)
     {
-        file.write(reinterpret_cast<const char*>( raw.data()), raw.size() );
+        file.write(reinterpret_cast<const char*>(raw.data()), raw.size());
+    }
+
+    void EndianWriter::writeRaw(const ByteArray& raw)
+    {
+        file.write(reinterpret_cast<const char*>(raw.data()), raw.size());
     }
 }

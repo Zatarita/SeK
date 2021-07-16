@@ -21,33 +21,6 @@ namespace SysIO
         this->close();
     }
 
-
-    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Exceptions
-    bool EndianReader::hasExcept() const noexcept
-    {
-        return EXCEPTION_STATUS != nullptr;
-    }
-
-    const std::string_view EndianReader::getExcept() const noexcept
-    {
-        if (this->hasExcept())
-            return { EXCEPTION_STATUS };
-        return { "" };
-    }
-
-    const std::string_view EndianReader::releaseExcept() noexcept
-    {
-        std::string_view ret{ this->getExcept() };
-        this->clearExcept();
-
-        return ret;
-    }
-
-    void EndianReader::clearExcept() noexcept
-    {
-        EXCEPTION_STATUS = nullptr;
-    }
-
     // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- Stream State
     void EndianReader::open(std::string_view path)
     {
@@ -68,7 +41,7 @@ namespace SysIO
     {
         if (file.is_open())
             return true;
-        EXCEPTION_STATUS = EXCEPTION_FILE_ACCESS;
+        this->setException(EXCEPTION_FILE_ACCESS);
         return false;
     }
 
@@ -107,7 +80,7 @@ namespace SysIO
     {
         if (offset < this->getFileSize())
             return true;
-        EXCEPTION_STATUS = EXCEPTION_FILE_BOUNDS;
+        this->setException(EXCEPTION_FILE_BOUNDS);
         return false;
     }
 
@@ -172,10 +145,10 @@ namespace SysIO
     ByteArray EndianReader::readRaw(const size_t& offset, size_t n)
     {
         // If there is no file open, or the base offset exceeds the bounds of the file
-        if ( !this->isOpen() || this->isInBounds(offset) ) return ByteArray();
+        if ( !this->isOpen() || !this->isInBounds(offset) ) return ByteArray();
 
         // If the requested data starts in the file, but exceeds the end of the file, adjust n to be remaining bytes to eof
-        if ( this->isInBounds(offset + n) ) n = this->getFileSize() - offset;
+        if ( !this->isInBounds(offset + n) ) n = this->getFileSize() - offset;
 
         // Store the original position, and create a vector<byte> of the right size
         const size_t initPos { this->tell() };
@@ -204,34 +177,15 @@ namespace SysIO
         return ret;
     }
 
-    template <class T> T EndianReader::read()
+    std::shared_ptr<ByteArray> EndianReader::get(size_t offset, size_t size)
+    {
+        return std::make_shared<ByteArray>( readRaw(offset,size) );
+    }
+
+    /*template <class T> T EndianReader::read()
     {
         T ret{};
         this->readInto(ret);
         return ret;
-    }
-
-    template <class T> void EndianReader::readInto(T& data)
-    {
-        // Read data from the stream, swap the endianness if needed.
-        file.read(reinterpret_cast<char*>(&data), sizeof(data));
-        if (SysIO::systemEndianness != fileEndianness)
-            SysIO::EndianSwap(data);
-        return *this;
-    }
-
-    template <class T> T EndianReader::peek()
-    {
-        // Read data of a certain type, seek the stream back, and return the data
-        T ret{ this->read<T>() };
-        seek(tell() - sizeof(T));
-
-        return ret;
-    }
-
-    template <class T> EndianReader& EndianReader::operator>>(T& data)
-    {
-        this->readInto(data);
-        return *this;
-    }
+    }*/
 }

@@ -18,7 +18,7 @@ namespace SysIO
     * A stream object that is aware of the endianness of the system, and the endianness of the file being written.
     * the stream can translate the data to any desired endianness as it writes the data.
     **/
-    class EndianWriter
+    class EndianWriter : public StreamExcept, public StreamOutputObject
     {
         // Exceptions
         /// @brief EXCEPTION_FILE_ACCESS - "Unable To Access Requested File."
@@ -30,9 +30,10 @@ namespace SysIO
         ByteOrder     fileEndianness {};
     public:
         /// @brief prepare a file for writing, and designate the endianness of the stream
-        /// @param std::string Path - File the stream is designated to write to
+        /// @param std::string_view Path - File the stream is designated to write to
         /// @param ByteOrder Endianness - Endianness of the file in question
         EndianWriter(std::string_view, const ByteOrder&);
+        /// @param ByteOrder Endianness - Endianness of the file in question
         EndianWriter(const ByteOrder&);
         /// @brief Cleanup ofstream
         ~EndianWriter();
@@ -40,18 +41,21 @@ namespace SysIO
         /// @brief Load a file, and designate the endianness of the stream
         /// @param std::string Path - File the stream is designated to read
         /// @param ByteOrder Endianness - Endianness of the file in question
-        void   open(std::string_view);
+        void open(std::string_view);
+        /// @brief Tells if the underlying stream is currently open (also sets EXCEPTION_FILE_ACCESS on failure)
+        bool isOpen();
         /// @brief close the stream
-        void   close();
+        void close();
 
-        bool is_open();
+        /// @brief (re)assigns the file endianness
+        void setEndianness(const SysIO::ByteOrder&);
 
         /// @brief Goto a specific offset
         /// @param size_t Offset - Offset to the new stream position
-        void   seek(const size_t&);
+        void seek(const size_t&);
         /// @brief Treats n bytes as padding, skipping over them
         /// @param size_t n - Number of bytes as padding
-        void   pad (const size_t&);
+        void pad (const size_t&);
         /// @brief Gets the current position in the stream
         /// @return size_t - Stream position
         const size_t tell();
@@ -59,10 +63,11 @@ namespace SysIO
         /// @brief Write a string to the stream. Null terminating if desired
         /// @param std::string str - String to write to the stream
         /// @param bool nullTerminated - adds the null terminator to the end of the write
-        void writeString(const std::string&, const bool& = false);
+        void writeString(std::string_view, const bool& = false);
         /// @brief Write raw data to file from ByteArray (ByteArray is a vector<std::byte>)
         /// @param ByteView data - Raw data to write to file
         void writeRaw   (ByteView);
+        void writeRaw   (const ByteArray&);
 
         // Template Functions
         /// @brief Write some data to file. Adjusted for endianness if required
